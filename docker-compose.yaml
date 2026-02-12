@@ -1,0 +1,64 @@
+services:
+
+  nginx:
+    build: ./dockerfiles/nginx
+    ports:
+      - "8000:80"
+    volumes:
+      - ./dockerfiles/nginx/conf/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./dockerfiles/nginx/conf/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - .:/var/www/redmouse
+    container_name: redmouse_nginx
+
+  php:
+    build:
+      context: .
+      dockerfile: dockerfiles/php/Dockerfile
+    #    ports:
+    #      - '9000:9000'
+    volumes:
+      - .:/var/www/redmouse
+    container_name: redmouse_php
+#    deploy:
+#      resources:
+#        limits:
+#          cpus: '4.0'
+#          memory: 1G
+
+  db:
+    image: postgres:18
+    container_name: redmouse_pgsql
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: '${DB_USERNAME}'
+      POSTGRES_PASSWORD: '${DB_PASSWORD}'
+      POSTGRES_DB: '${DB_DATABASE}'
+#    deploy:
+#      resources:
+#        limits:
+#          cpus: '2.0'
+#          memory: 2G
+#
+  pgadmin:
+    image: dpage/pgadmin4:9.12
+    container_name: redmouse_pgadmin
+    ports:
+      - "5434:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: '${PGADMIN_EMAIL}'
+      PGADMIN_DEFAULT_PASSWORD: '${PGADMIN_DEFAULT_PASSWORD}'
+      PMA_HOST: db
+
+#  redis:
+#    build: ./dockerfiles/redis
+#    volumes:
+#      - .:/var/www/redmouse
+#    container_name: redmouse_redis
+#    ports:
+#      - "6379:6379"
+#    deploy:
+#      resources:
+#        limits:
+#          #          cpus: '2.0'
+#          memory: 400MB
