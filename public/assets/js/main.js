@@ -1,4 +1,8 @@
-import { $ } from "jquery";
+// import $ from 'jquery';
+// window.jQuery = window.$ = $;
+
+// // import "../../node_modules/parallax-js/dist/parallax.min"
+// import "/node_modules/parallax-mouse/dist/parallax-mouse.min.js"
 
 $(function(){
 

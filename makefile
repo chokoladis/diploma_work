@@ -23,6 +23,3 @@ install-composer:
 	docker exec -w /var/www/redmouse redmouse_php composer install --no-interaction --prefer-dist --optimize-autoloader
 update-composer:
 	docker exec -w /var/www/redmouse redmouse_php composer update --no-interaction
-
-#fix-right:
-#	sudo chmod -R 777 storage

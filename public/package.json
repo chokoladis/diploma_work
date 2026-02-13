@@ -1,5 +1,7 @@
 {
   "dependencies": {
-    "jquery": "^4.0.0"
+    "jquery": "^4.0.0",
+    "parallax-js": "^3.1.0",
+    "parallax-mouse": "^1.0.1"
   }
 }

@@ -15,7 +15,7 @@
     width: 70vh;
     height: 190px;
     position: relative;
-    background: url('img/layers/НАСЛАДИСЬ.png') no-repeat center center / contain;
+    background: url('/img/layers/НАСЛАДИСЬ.png') no-repeat center center / contain;
     max-width: 702px;
     max-height: 196px;
 }
@@ -43,7 +43,7 @@
     background: red;
 }
 .krug{
-    background: url('img/layers/Слой\ 4.png') no-repeat center center / contain;
+    background: url('/img/layers/Слой\ 4.png') no-repeat center center / contain;
     background-repeat: no-repeat;
     width: 12vh;
     height: 6vh;
@@ -54,7 +54,7 @@
     max-height: 48px;
 }
 .plus1{
-    background: url('img/layers/Слой\ 5.png') no-repeat center center / contain;
+    background: url('/img/layers/Слой\ 5.png') no-repeat center center / contain;
     background-repeat: no-repeat;
     width: 9vh;
     height: 6vh;
@@ -65,7 +65,7 @@
     max-height: 33px;
 }
 .line1{
-    background: url('img/layers/Слой\ 61.png') no-repeat center center / contain;
+    background: url('/img/layers/Слой\ 61.png') no-repeat center center / contain;
     background-repeat: no-repeat;
     width: 15vh;
     height: 7vh;
@@ -77,7 +77,7 @@
     max-height: 68px;
 }
 .line2{
-    background: url('img/layers/Слой\ 2.png') no-repeat center center / contain;
+    background: url('/img/layers/Слой\ 2.png') no-repeat center center / contain;
     background-repeat: no-repeat;
     width: 20vh;
     height: 11vh;
@@ -89,7 +89,7 @@
     max-height: 122px;
 }
 .plus2{
-    background: url('img/layers/Слой\ 3.png') no-repeat center center / contain;
+    background: url('/img/layers/Слой\ 3.png') no-repeat center center / contain;
     background-repeat: no-repeat;
     width: 7vh;
     height: 9vh;
@@ -100,7 +100,7 @@
     max-height: 95px;
 }
 .dline1{
-    background: url('img/layers/Слой\ 10.png') no-repeat center center / contain;
+    background: url('/img/layers/Слой\ 10.png') no-repeat center center / contain;
     background-repeat: no-repeat;
     width: 14vh;
     height: 13vh;
@@ -112,7 +112,7 @@
     z-index: -22;
 }
 .tringles{
-    background: url('img/layers/Слой\ 9.png') no-repeat center center / contain;
+    background: url('/img/layers/Слой\ 9.png') no-repeat center center / contain;
     background-repeat: no-repeat;
     width: 14vh;
     height: 13vh;
@@ -124,7 +124,7 @@
     z-index: -22;
 }
 .tochki{
-    background: url('img/layers/Слой\ 11.png') no-repeat center center / contain;
+    background: url('/img/layers/Слой\ 11.png') no-repeat center center / contain;
     width: 40vh;
     height: 40vh;
     right:-5%;

@@ -30,15 +30,14 @@ RUN set -eux; \
             linux-headers \
             zlib-dev \
             libzip-dev \
-            freetype-dev \
             oniguruma-dev \
             icu-dev \
             libxml2-dev \
-            curl-dev
-RUN apk add bash \
+            curl-dev && \
+    apk add --no-cache postgresql-dev \
+        bash \
         libzip \
         zlib \
-        freetype \
         icu-libs \
         libxml2 \
         curl; \
@@ -46,13 +45,12 @@ RUN apk add bash \
         pdo \
         pdo_pgsql \
         pgsql \
-        php-pgsql \
         mbstring \
         bcmath \
         intl \
         opcache \
         sockets \
-        pcntl \
         curl; \
+    docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql && \
     apk del .build-deps; \
     apk add --no-cache ca-certificates && update-ca-certificates
