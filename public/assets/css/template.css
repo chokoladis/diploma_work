@@ -131,7 +131,7 @@ a.logo {
     min-width: 10vh;
 }
 .img-logo{
-    background: url(/img/logo.png) no-repeat center center /  contain;
+    object-fit: contain;
     width: 15vh;
     height: 100%;
     max-width: 150px;

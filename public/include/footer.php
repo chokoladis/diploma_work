@@ -77,3 +77,7 @@
 
     </body>
 </html>
+<?php
+
+    require_once $_SERVER['DOCUMENT_ROOT'].'/include/after_load.php';
+?>

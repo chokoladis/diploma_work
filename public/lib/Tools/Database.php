@@ -1,6 +1,6 @@
 <?
 
-namespace Main;
+namespace Main\Tools;
 
 class Database
 {
@@ -13,11 +13,6 @@ class Database
         }
 
         return self::$instance;
-    }
-
-    public function __construct()
-    {
-
     }
 
     public function connect()
