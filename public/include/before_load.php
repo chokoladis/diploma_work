@@ -1,6 +1,8 @@
 <?php
 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+$_SERVER['DOCUMENT_ROOT'] = '/var/www/redmouse/public/';
+
+require_once  $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
 $dotenv = Dotenv\Dotenv::createImmutable($_SERVER['DOCUMENT_ROOT'] . '/../');
 $dotenv->load();

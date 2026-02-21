@@ -25,7 +25,9 @@
                     <img src="/img/logo.png" class="img-logo">
                 </a>
                 <ul class="menu d-flex">
-                    <!-- todo from db-->
+                    <?
+
+                    ?>
                     <li><a href="/catalog.php">Услуги</a></li>
                     <li><a href="/price.php">Прайс-лист</a></li>
                     <li><a href="/otz.php">Отзывы</a></li>

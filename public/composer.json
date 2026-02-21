@@ -1,8 +1,10 @@
 {
   "autoload": {
-    "psr-4": {"Main\\": "lib/"}
+    "psr-4": {"Main\\": "lib/"},
+    "files": ["include/functions.php"]
   },
   "require": {
-    "vlucas/phpdotenv": "^5.6"
+    "vlucas/phpdotenv": "^5.6",
+    "psr/log": "^3.0"
   }
 }

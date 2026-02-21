@@ -12,7 +12,12 @@ class Logger implements LoggerInterface
 
     private function __construct(string $logFile)
     {
-        $this->filePath = '/../logs/'.$logFile;
+        $dirPath = $_SERVER['DOCUMENT_ROOT'].'/uploads/logs/';
+        if (!file_exists($dirPath)) {
+            mkdir($dirPath, recursive: true);
+        }
+
+        $this->filePath = $dirPath.$logFile;
     }
 
     static function getInstance(string $logFile): LoggerInterface

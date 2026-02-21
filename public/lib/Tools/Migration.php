@@ -7,10 +7,12 @@ use Main\Core\Interfaces\HasMap;
 class Migration
 {
     private \PDO $db;
+    private \Psr\Log\LoggerInterface $logger;
 
     public function __construct()
     {
         $this->db = Database::getInstance()->connect();
+        $this->logger = Logger::getInstance('migration');
     }
 
     public function createTable(HasMap $table)
@@ -19,14 +21,24 @@ class Migration
         $lastField = array_key_last($map);
         $queryStr = '';
         foreach ($table->map() as $field => $type) {
-            $del = $lastField ? '' : ',';
+            $del = $lastField === $field ? '' : ',';
             $queryStr .= $field.' '.$type.$del;
         }
 
-        $query = $this->db->prepare("CREATE TABLE IF NOT EXISTS ? (?)");
+        $strQuery = "CREATE TABLE IF NOT EXISTS {$table->getTableName()} ({$queryStr})";
 
-        if (!$query->execute([$table->getTableName(), $queryStr])) {
-            Logger::getInstance('migration')->error("Failed to create table {$table->getTableName()}");
+        if (!$this->db->query($strQuery)->execute()) {
+            $this->logger->error("Ошибка создания {$table->getTableName()} или таблица уже существует");
+            return false;
+        }
+
+        return true;
+    }
+
+    public function dropTable(HasMap $table)
+    {
+        if (!$this->db->query("DROP TABLE IF EXISTS {$table->getTableName()}")->execute()) {
+            $this->logger->error("Ошибка удаления {$table->getTableName()} или таблицы уже не существует");
             return false;
         }
 

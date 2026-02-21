@@ -17,6 +17,8 @@ services:
     #    ports:
     #      - '9000:9000'
     volumes:
+      - ./dockerfiles/php/conf/php.ini:/usr/local/etc/php/php.ini-production
+      - ./dockerfiles/php/conf/php.ini:/usr/local/etc/php/php.ini-development
       - .:/var/www/redmouse
     container_name: redmouse_php
 #    deploy:
