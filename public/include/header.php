@@ -1,5 +1,8 @@
 <?
-    require_once 'before_load.php';
+
+use Main\Services\Auth\AuthService;
+
+require_once 'before_load.php';
 
     ob_start();
 ?>
@@ -34,20 +37,21 @@
                             }
                         }
 
-                        if (isset($_SESSION['logged_user'])) {
-                    ?>
-                            <li><a class="profile" href="#"><?= $_SESSION["logged_user"]->login ?></a></li>
+                        $authService = new AuthService();
+                        $userId = $authService->getLoggedUser();
+                        // todo write login or name to show
+
+                        if ($userId) { ?>
+                            <li><a class="profile" href="#"><?= $userId ?></a></li>
                             <li>
-                                <form action="#" method="POST"><input class="exit" name="exit" type="submit" value="Выйти"></form>
+                                <form action="#" method="POST">
+                                    <input class="exit" name="exit" type="submit" value="Выйти">
+                                </form>
                             </li>
                     <?
-                        $exit = $_POST['exit'];
-                        if (isset($exit)) {
-                            unset($_SESSION['logged_user']);
-                        }
-                    } else {
-                    ?>
-                        <li><a href="/auth.php">Авторизация</a></li>
+                        //todo ajax logoout
+                    } else { ?>
+                        <li><a href="/auth/">Авторизация</a></li>
                     <? } ?>
                 </ul>
             </div>
