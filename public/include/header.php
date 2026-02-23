@@ -26,20 +26,14 @@
                 </a>
                 <ul class="menu d-flex">
                     <?
+                        $menuHeader = \Main\Services\MenuService::get();
 
-                    ?>
-                    <li><a href="/catalog.php">Услуги</a></li>
-                    <li><a href="/price.php">Прайс-лист</a></li>
-                    <li><a href="/otz.php">Отзывы</a></li>
-                    <li><a href="/trek.php">Трек-код</a></li>
-                    <li><a href="/about.php">О нас</a></li>
-                    <li class="vk_menu"><a><img src="/img/вк.png" alt=""></a>
-                        <ul class="vk">
-                            <li><a href="https://vk.com/redmouse" target="_blank">Главный директор</a></li>
-                            <li><a href="https://vk.com/redmouse_56" target="_blank">Группа</a></li>
-                        </ul>
-                    </li>
-                    <?
+                        if (!empty($menuHeader)) {
+                            foreach ($menuHeader as $menuItem) {
+                                ?><li><a href="<?=$menuItem->link?>"><?=$menuItem->title?></a></li><?
+                            }
+                        }
+
                         if (isset($_SESSION['logged_user'])) {
                     ?>
                             <li><a class="profile" href="#"><?= $_SESSION["logged_user"]->login ?></a></li>
