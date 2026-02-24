@@ -2,5 +2,5 @@
 
 $obData = ob_get_clean();
 
-print(\Main\Services\PageService::loadData($obData));
+print(\Main\Services\Content\PageService::loadData($obData));
 // db disconnect ?

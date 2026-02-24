@@ -25,7 +25,7 @@ class Migration
             $queryStr .= $field.' '.$type.$del;
         }
 
-        $strQuery = "CREATE TABLE IF NOT EXISTS {$table->getTableName()} ({$queryStr})";
+        $strQuery = "CREATE TABLE IF NOT EXISTS \"{$table->getTableName()}\" ({$queryStr})";
 
         if (!$this->db->query($strQuery)->execute()) {
             $this->logger->error("Ошибка создания {$table->getTableName()} или таблица уже существует");

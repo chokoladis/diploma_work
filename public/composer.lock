@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d9808428bf2f8773936e7212e80dc5fb",
+    "content-hash": "be7ae5bf81414e94af885c62a3171157",
     "packages": [
         {
             "name": "firebase/php-jwt",
@@ -130,6 +130,72 @@
                 }
             ],
             "time": "2025-12-27T19:43:20+00:00"
+        },
+        {
+            "name": "particle/validator",
+            "version": "v2.3.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/particle-php/Validator.git",
+                "reference": "8a1677866a4e7ab448b969539a94601a7b00b279"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/particle-php/Validator/zipball/8a1677866a4e7ab448b969539a94601a7b00b279",
+                "reference": "8a1677866a4e7ab448b969539a94601a7b00b279",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4"
+            },
+            "require-dev": {
+                "byrokrat/checkdigit": "^1.0",
+                "giggsey/libphonenumber-for-php": "^7.2",
+                "phpunit/phpunit": "~4.0",
+                "squizlabs/php_codesniffer": "2.*"
+            },
+            "suggest": {
+                "byrokrat/checkdigit": "If you want to use CreditCard validation rule, this library must be installed.",
+                "giggsey/libphonenumber-for-php": "If you want to use Phone validation rule, this library must be installed."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Particle\\Validator\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Berry Langerak",
+                    "email": "berry@berryllium.nl",
+                    "role": "developer"
+                },
+                {
+                    "name": "Rick van der Staaij",
+                    "homepage": "http://rickvanderstaaij.nl",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Flexible and highly usable validation library with no dependencies.",
+            "homepage": "http://github.com/particle-php/validator",
+            "keywords": [
+                "validation",
+                "validator"
+            ],
+            "support": {
+                "issues": "https://github.com/particle-php/Validator/issues",
+                "source": "https://github.com/particle-php/Validator/tree/v2.3.6"
+            },
+            "time": "2025-12-09T13:33:27+00:00"
         },
         {
             "name": "phpoption/phpoption",
@@ -601,5 +667,5 @@
     "prefer-lowest": false,
     "platform": {},
     "platform-dev": {},
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.6.0"
 }

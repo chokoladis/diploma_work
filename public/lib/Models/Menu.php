@@ -18,7 +18,7 @@ class Menu extends Model
     public function map() : array
     {
         return [
-            'id' => 'SERIAL',
+            'id' => 'SERIAL PRIMARY KEY',
             'title' => 'VARCHAR(30) NOT NULL',
             'code' => 'VARCHAR(30) NOT NULL',
             'link' => 'VARCHAR(255) NOT NULL',

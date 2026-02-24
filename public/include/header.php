@@ -13,7 +13,7 @@ require_once 'before_load.php';
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!--todo title from env-->
-        <title><?= \Main\Services\PageService::getTagPageTitle() ?></title>
+        <title><?= \Main\Services\Content\PageService::getTagPageTitle() ?></title>
 
         <link rel="stylesheet" href="/assets/css/animate.css">
         <link rel="stylesheet" href="/assets/css/normalize.css">
@@ -29,7 +29,7 @@ require_once 'before_load.php';
                 </a>
                 <ul class="menu d-flex">
                     <?
-                        $menuHeader = \Main\Services\MenuService::get();
+                        $menuHeader = \Main\Services\Content\MenuService::get();
 
                         if (!empty($menuHeader)) {
                             foreach ($menuHeader as $menuItem) {

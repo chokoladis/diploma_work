@@ -44,10 +44,10 @@
                     </div>
                 </div>
                 <div class="footer_block_a d-flex justify-content-center">
-                    <div class="footer_a"><a href="/map.php">Карта сайта</a></div>
-                    <div class="footer_a"><a href="/sp_info.php">Справочная информация</a></div>
-                    <div class="footer_a"><a href="/ask.php">Вопросы и ответы</a></div>
-                    <div class="footer_a"><a href="/calendar.php">Календарь</a></div>
+                    <div class="footer_a"><a href="/sitemap/">Карта сайта</a></div>
+                    <div class="footer_a"><a href="/reference/">Справочная информация</a></div>
+                    <div class="footer_a"><a href="/faq/">Вопросы и ответы</a></div>
+                    <div class="footer_a"><a href="/calendar/">Календарь</a></div>
                 </div>
 
                 <p class="copyright slideInDown wow animated">© «Цифровая студия RedMouse (ИП Соловьев)», 2019-2026</p>

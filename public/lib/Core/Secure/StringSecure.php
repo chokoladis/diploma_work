@@ -4,8 +4,8 @@ namespace Main\Core\Secure;
 
 class StringSecure
 {
-    public static function get(string $value)
+    public static function get(?string $value = null)
     {
-        return addslashes(htmlspecialchars(trim($value)));
+        return $value ? addslashes(htmlspecialchars(trim($value))) : null;
     }
 }

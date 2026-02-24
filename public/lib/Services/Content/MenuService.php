@@ -1,6 +1,6 @@
 <?php
 
-namespace Main\Services;
+namespace Main\Services\Content;
 
 use Main\Core\Database\QueryBuilder;
 use Main\Models\Menu;

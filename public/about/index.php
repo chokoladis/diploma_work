@@ -1,7 +1,7 @@
 <?
     require_once $_SERVER['DOCUMENT_ROOT'].'/include/header.php';
 
-    \Main\Services\PageService::setTitle('О нас');
+    \Main\Services\Content\PageService::setTitle('О нас');
 
     require_once $_SERVER['DOCUMENT_ROOT'].'/assets/css/about.php';
 ?>
