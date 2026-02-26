@@ -1,53 +1,4 @@
 <style>
-    @font-face{
-        font-family: EFN Gradient Logo;
-        src: url(font/13944.ttf);
-    }
-    .offer{
-        font-family: EFN Gradient Logo,century gothic,sans-serif;
-    }
-    .title{
-        cursor: default;
-        width: 100%;
-    }
-    .title2 hr{
-        width: 100%;
-    }
-    .title2 h2{
-        font-size: 6vh;
-    }
-    .title2{
-        left: 5vh;
-        top: -3vh;
-        position: relative;
-    }
-    .title2 a{
-        font-size: 10vh;
-    }
-    .vertical{
-        transform: rotate(-90deg);
-        color: white;
-        opacity: 0.7;
-        font-size: 3vh;
-        width: 120px;
-        height: 20px;
-        left: -50px;
-        top: 12vh;
-        position: relative;
-        font-weight: 500;
-    }
-    .title_order{
-        text-shadow: 0px 0px 3px rgba(218, 161, 255, 0.459);
-        color: transparent;
-        background: url(/img/7HIt0xK.jpg) repeat;
-        background-size: cover;
-        -webkit-background-clip: text;
-    }
-    .title_order:hover{
-        text-shadow: 0px 0px 30px rgba(218, 161, 255, 0.459);
-    }
-    
-
     .action {
         width: 50%;
         position: relative;
@@ -125,6 +76,7 @@
         font-size: 3vh;
         color: rgb(255, 255, 255);
     }
+
     .login_title{
         font-size: 4vh;
         color: rgb(54, 54, 54);
@@ -145,7 +97,7 @@
         font-size: 2vh;
         text-align: center;
     }
-    .succes{
+    .success{
         top: 5vh;
         position: relative;
         width: 35vh;

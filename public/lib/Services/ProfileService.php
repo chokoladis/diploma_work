@@ -25,7 +25,16 @@ class ProfileService
 
     public function getByLogin($login)
     {
+        $queryBuilder = new QueryBuilder(new User);
 
+        $query = $queryBuilder->where('login', $login)
+            ->limit(1)
+            ->getResult();
+        if ($query) {
+            return $query->fetch();
+        }
+
+        return false;
     }
 
     /**

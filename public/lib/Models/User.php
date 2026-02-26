@@ -19,10 +19,11 @@ class User extends Model
 
     public function map() : array
     {
+//        todo add role
         return [
             'id' => 'SERIAL PRIMARY KEY',
-            'login' => 'VARCHAR(60) NOT NULL',
-            'email' => 'VARCHAR(200) NOT NULL',
+            'login' => 'VARCHAR(60) NOT NULL UNIQUE',
+            'email' => 'VARCHAR(200) NOT NULL UNIQUE',
             'phone' => 'VARCHAR(12) NULL',
             'password' => 'VARCHAR(200) NOT NULL',
             'email_verified' => 'BOOLEAN NOT NULL DEFAULT FALSE',

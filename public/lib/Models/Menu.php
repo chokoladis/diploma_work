@@ -9,6 +9,7 @@ class Menu extends Model
     public string $title;
     public string $code;
     public string $link;
+    public ?int $sort = null;
     public bool $active;
     public int $level = 0;
     public ?string $area = null;
@@ -22,6 +23,7 @@ class Menu extends Model
             'title' => 'VARCHAR(30) NOT NULL',
             'code' => 'VARCHAR(30) NOT NULL',
             'link' => 'VARCHAR(255) NOT NULL',
+            'sort' => 'SMALLINT NULL DEFAULT 100',
             'active' => 'BOOLEAN NOT NULL DEFAULT TRUE',
             'level' => 'SMALLINT DEFAULT 0',
             'area' => 'VARCHAR(40) NULL',

@@ -1,4 +1,7 @@
 <?
+
+use Main\Helpers\StrHelper;
+
 require_once $_SERVER['DOCUMENT_ROOT'].'/include/header.php';
 
 // todo middleware ? для запрета или редиректа авторизованным
@@ -8,13 +11,12 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/assets/css/auth.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/assets/css/register.php';
 
 $postFields = [
-    'email' => \Main\Core\Secure\StrSecure::get($_POST["email"] ?? null),
-    'login' => \Main\Core\Secure\StrSecure::get($_POST["login"] ?? null),
-    'password' => \Main\Core\Secure\StrSecure::get($_POST["password"] ?? null),
-    'password_confirm' => \Main\Core\Secure\StrSecure::get($_POST["password_confirm"] ?? null)
+    'email' => $_POST["email"] ?? null,
+    'login' => $_POST["login"] ?? null,
+    'password' => $_POST["password"] ?? null,
+    'password_confirm' => $_POST["password_confirm"] ?? null
 ];
 ?>
-<body>
     <section class="first" id="first">
         <div class="content">
             <div class="container d-flex">
@@ -37,7 +39,7 @@ $postFields = [
                             $errorMessages = [];
                             if (isset($_POST["submit"])) {
                                 $authService = new \Main\Services\Auth\AuthService;
-                                [$result, $errorMessages] = $authService->register($postFields);
+                                [$result, $errorMessages] = $authService->register();
                                 if ($result) {
                                     header("Location: /");//todo alert
                                 }
@@ -50,7 +52,7 @@ $postFields = [
                                 <input type="email" name="email" id="email" placeholder="Email" value='<?= $postFields['email']; ?>'>
                             </div>
                             <? if ($errorMessages['email']) {
-                                echo \Main\Helpers\StrHelper::outErrors($errorMessages['email']);
+                                echo StrHelper::outErrors($errorMessages['email']);
                             }?>
                         </div>
                         <div class="form-control">
@@ -59,7 +61,7 @@ $postFields = [
                                 <input type="text" name="login" id="login" placeholder="Логин" value='<?= $postFields["login"]; ?>'>
                             </div>
                             <? if ($errorMessages['login']) {
-                                echo \Main\Helpers\StrHelper::outErrors($errorMessages['login']);
+                                echo StrHelper::outErrors($errorMessages['login']);
                             } ?>
                         </div>
                         <div class="form-control">
@@ -68,7 +70,7 @@ $postFields = [
                                 <input type="password" name="password" id="password" placeholder="Пароль" value='<?= $postFields["password"]; ?>'>
                             </div>
                             <? if ($errorMessages['password']) {
-                                echo \Main\Helpers\StrHelper::outErrors($errorMessages['password']);
+                                echo StrHelper::outErrors($errorMessages['password']);
                             } ?>
                         </div>
                         <div class="form-control">
@@ -77,7 +79,7 @@ $postFields = [
                                 <input type="password" name="password_confirm" id="password_confirm" placeholder="Повторите пароль" value='<?= $postFields["password_confirm"]; ?>'>
                             </div>
                             <? if ($errorMessages['password_confirm']) {
-                                echo \Main\Helpers\StrHelper::outErrors($errorMessages['password_confirm']);
+                                echo StrHelper::outErrors($errorMessages['password_confirm']);
                             } ?>
                         </div>
                         <div class="submit ">

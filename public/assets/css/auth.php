@@ -46,32 +46,46 @@
     .title_order:hover{
         text-shadow: 0px 0px 30px rgba(218, 161, 255, 0.459);
     }
-    .slider{
-        background: rgba(0,0,0,0.07);
-        padding-left: 85px;
-        position: relative;
-    }
-    .slider_body{
-        top: 20vh;
-        position: relative;
-    }
-    .slider .input{
+
+    .action {
         width: 50%;
+        position: relative;
+        height: auto;
+        padding-left: 5%;
+        padding-right: 5%;
+        margin: auto;
+    }
+    .action form {
+        width: 100%;
+    }
+    .action form * {
+        font-family: Candara, sans-serif;
+    }
+    /**/
+    .form-control {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 1vh;
+    }
+    /* подсветить иконку при заполнении */
+    .action .input{
+        width: 100%;
         height: 4%;
         border-radius: 40px;
-        margin-bottom: 1vh;
-        font-family: Candara, sans-serif;
+        margin: 0;
+
         background: rgba(0, 0, 0, 0.1);
+        display: flex;
     }
-    .slider .input img{
-        padding: 2vh 3vh;
+    .action .input img{
         width: 5vh;
         height: 5vh;
         border-radius: 30px;
         padding: 0;
         margin: 0;
     }
-    .slider .input input{
+    .action .input input{
         background: rgba(0, 0, 0, 0);
         margin: 0;
         padding-left: 10px;
@@ -81,35 +95,52 @@
         font-size: 2.2vh;
         color: rgb(105, 105, 105);
     }
-    .slider .input:hover{
+    .action .input:hover{
         background: rgba(0,0,0,0.2);
         box-shadow: inset 0px 0px 1px rgba(0, 0, 0, 0.603);
     }
-    .slider .submit{
-        width: 35%;
-        text-align: center;
-        height: 6%;
-        font-size: 2vh;
-        margin-bottom: 1vh;
-        font-family: Candara, sans-serif;
+    .action .btn-group {
+        width: fit-content;
+        margin: 0px auto;
+        margin-top: 20px;
+    }
+    .action .btn-group .submit {
+        display: flex;
+        align-items: center;
         background: rgba(245, 32, 32, 0.521);
-        top: 3vh;
         position: relative;
-        padding: 2vh 0vh;
+        padding: 10px 20px;
         border-radius: 50px;
-        left: 5vh;
-        box-shadow:  0px 0px 5px rgba(247, 50, 50, 0.623);
+        font-size: 16px;
+        box-shadow: 0px 0px 5px rgba(247, 50, 50, 0.623);
+        margin-right: 15px;
+        cursor: pointer;
     }
-    .slider .submit:hover{
-        box-shadow: 0px 0px 20px rgba(247, 50, 50, 0.723);
+    .action .btn-group .submit:last-of-type {
+        margin: 0;
     }
-    .slider .submit input{
+    .action .submit:hover{
+        background: white;
+        color: red;
+        box-shadow: 0px 0px 10px rgba(247, 50, 50, 0.723);
+    }
+    .action .submit *{
+        font-weight: 700;
         background: rgba(0, 0, 0, 0);
         margin: 0;
         border: 0px;
         width: 100%;
-        font-size: 3vh;
-        color: rgb(255, 255, 255);
+        color: inherit;
+    }
+
+    .login_title{
+        font-size: 4vh;
+        color: rgb(54, 54, 54);
+        background: rgb(200, 200, 200);
+        border-radius: 50px;
+        width: 5.5vh;
+        justify-content: center;
+        display: flex;
     }
     .errors{
         top: 5vh;
@@ -122,7 +153,7 @@
         font-size: 2vh;
         text-align: center;
     }
-    .succes{
+    .success{
         top: 5vh;
         position: relative;
         width: 35vh;

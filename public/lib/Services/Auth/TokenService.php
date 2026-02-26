@@ -15,7 +15,7 @@ class TokenService
     {
     }
 
-    public function generate(array $payload): string
+    private function generate(array $payload): string
     {
         $payload['iat'] = time();
         $payload['exp'] = time() + $this->expire;
@@ -31,5 +31,12 @@ class TokenService
         } catch (\Exception) {
             return null;
         }
+    }
+
+    public function setToken(array $payload): void
+    {
+        $token = $this->generate($payload);
+
+        setcookie('jwt_token', $token, time() + 36000000, '/');
     }
 }

@@ -35,9 +35,29 @@ class Migration
         return true;
     }
 
+    public function addIndex(HasMap $table, array $fields, ?string $indexName = null, ?string $type = null)
+    {
+        $indexName = $indexName ?? $table->getTableName().'_'.implode('_', $fields);
+        $strFields = implode(', ', $fields);
+
+        if ($type) {
+            $strQuery = "CREATE {$type} INDEX ";
+        } else {
+            $strQuery = "CREATE INDEX ";
+        }
+        $strQuery .= "{$indexName} ON \"{$table->getTableName()}\" ({$strFields})";
+
+        if (!$this->db->query($strQuery)->execute()) {
+            $this->logger->error("Ошибка создания индекса {$indexName}");
+            return false;
+        }
+
+        return true;
+    }
+
     public function dropTable(HasMap $table)
     {
-        if (!$this->db->query("DROP TABLE IF EXISTS {$table->getTableName()}")->execute()) {
+        if (!$this->db->query("DROP TABLE IF EXISTS \"{$table->getTableName()}\"")->execute()) {
             $this->logger->error("Ошибка удаления {$table->getTableName()} или таблицы уже не существует");
             return false;
         }

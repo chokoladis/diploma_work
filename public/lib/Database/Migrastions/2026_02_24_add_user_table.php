@@ -9,10 +9,11 @@ global $argv;
 //$argv[0] - current file path
 
 try {
+    $model = new \Main\Models\User();
     if (isset($argv[1]) && $argv[1] === 'down') {
-        echo 'Результат - '.$new->dropTable(new \Main\Models\User) ? 'успешно' : 'ошибка';
+        echo 'Результат - '.$new->dropTable($model) ? 'успешно' : 'ошибка';
     } else {
-        echo 'Результат - '.$new->createTable(new \Main\Models\User) ? 'успешно' : 'ошибка';
+        echo '<br>Результат - '.$new->createTable($model) ? 'успешно' : 'ошибка';
     }
 
     echo '<br>';

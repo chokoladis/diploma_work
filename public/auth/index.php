@@ -1,4 +1,7 @@
 <?
+
+use Main\Helpers\StrHelper;
+
 require_once $_SERVER['DOCUMENT_ROOT'].'/include/header.php';
 
 \Main\Services\Content\PageService::setTitle('Авторизация');
@@ -21,53 +24,53 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/assets/css/auth.php';
                     </div>
                 </div>
             </div>
-            <div class="slider">
-                <div class="slider_body">
-                    <form action="#" method="post">
+            <div class="action">
+                <form action="#" method="post" id="auth-form">
+                    <?
+                        if(isset($_POST['submit_auth'])) {
+
+                            $authService = new \Main\Services\Auth\AuthService;
+                            [$result, $errors] = $authService->login();
+                            if ($result) {
+                                header("Location: /");//todo alert
+                            }
+                        }
+                    ?>
+                    <div class="form-control">
                         <div class="input d-flex">
                             <img src="/img/user.png" alt="пользователь" class="login">
                             <input type="text" name="login" id="login" placeholder="Логин" autocomplete="login">
                         </div>
+                        <div class="input-error">
+                            <?
+                            if (isset($errors['login'])) {
+                                echo StrHelper::outErrors($errors['login']);
+                            }
+                            ?>
+                        </div>
+                    </div>
+                    <div class="form-control">
                         <div class="input d-flex">
                             <img src="/img/пароль.png" alt="пароль" class="password">
                             <input type="password" name="password" id="password" placeholder="Пароль" autocomplete="password">
                         </div>
-                        <div class="submit ">
+                        <div class="input-error">
+                            <?
+                                if (isset($errors['password'])) {
+                                    echo StrHelper::outErrors($errors['password']);
+                                }
+                            ?>
+                        </div>
+                    </div>
+                    <div class="btn-group">
+                        <div class="submit">
                             <input type="submit" id="submit" name="submit_auth" value="Войти">
                         </div>
                         <div class="submit">
                             <a href="/register/" class="registration">Зарегистрироваться</a>
                         </div>
-                        <?
-                        if(isset($_POST['submit_auth'])) {
-                            $errors = array();
-                            $user = R::findOne('loginpass', "login = ?", array($_POST['login']));
-                            if ($user) {
-                                if (password_verify($_POST['password'], $user->password)) {
-                                    $login = $_POST['login'];
-                                    $query = mysqli_query($connect,"SELECT * FROM `loginpass` WHERE `login` ='$login'");
-                                    while ($row = mysqli_fetch_assoc($query)) {
-                                        $_SESSION['logged_user'] = $user;
-                                    };
-                                } else {
-                                    $errors[] = "Неверно введен пароль";
-                                }
-                            } else {
-                                $errors[] = "Пользователь с таким логином не найден";
-                            }
-                            if (!empty($errors)) {
-                                echo "<div class='errors'>".array_shift($errors)."</div>";
-                            }
-                        }
-                        ?>
-                    </form>
-                    <?
-                    if (isset($_SESSION['logged_user'])) : ?>
-                        <div class="succes">
-                            Вы успешно авторизовались!
-                        </div>
-                    <?  endif; ?>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

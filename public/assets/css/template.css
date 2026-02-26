@@ -3,7 +3,7 @@
     src: url(font/eurof35.ttf);
 }
 *{
-    transition: all 0.5s ease;
+    transition: all 0.3s ease;
 }
 body{
     margin: 0;
@@ -61,6 +61,10 @@ input{
 .align-items-center{
     align-items: center;
 }
+.btn-group {
+    display: flex;
+    flex-wrap: wrap;
+}
 .content{
     position: relative;
     height: 80vh;
@@ -100,23 +104,20 @@ h1,h2,h3,h4,h5,h6{
 }
 
 header{
-    z-index: 100;
-    height: 15vh;
-    position: relative;
+    z-index: 1000;
+    width: 100%;
+    height: 10vh;
     background: linear-gradient(110deg, #181818,rgb(32,32,32));
+    box-shadow: 0px 2px 50px rgba(255, 0, 0, 0.2);
+    position: fixed;
+    top: 0;
 }
 header.glide {
-    top: 0;
-    z-index: 1000;
-    position: fixed;
-    font-size: 1.5em;
-    height: 10vh;
-    width: 100%;
-    background: linear-gradient(110deg, #585858,#232323);
-    color: #000;
-    text-align: left;
-    padding-left: 2em;
-    box-shadow: 0px 1px 3px black;
+    box-shadow: 0px 2px 1px rgba(255, 0, 0, 0.2);
+}
+section.first {
+    margin-top: 16vh;
+    position: relative;
 }
 .d-flex{
     display: -moz-flex;
