@@ -1,18 +1,17 @@
 <?
 require_once $_SERVER['DOCUMENT_ROOT'].'/include/header.php';
 
-use Particle\Validator\Validator;
-
+// todo middleware ? для запрета или редиректа авторизованным
 \Main\Services\Content\PageService::setTitle('Авторизация');
 
 require_once $_SERVER['DOCUMENT_ROOT'].'/assets/css/auth.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/assets/css/register.php';
 
 $postFields = [
-    'email' => \Main\Core\Secure\StringSecure::get($_POST["email"] ?? null),
-    'login' => \Main\Core\Secure\StringSecure::get($_POST["login"] ?? null),
-    'password' => \Main\Core\Secure\StringSecure::get($_POST["password"] ?? null),
-    'password_confirm' => \Main\Core\Secure\StringSecure::get($_POST["password_confirm"] ?? null)
+    'email' => \Main\Core\Secure\StrSecure::get($_POST["email"] ?? null),
+    'login' => \Main\Core\Secure\StrSecure::get($_POST["login"] ?? null),
+    'password' => \Main\Core\Secure\StrSecure::get($_POST["password"] ?? null),
+    'password_confirm' => \Main\Core\Secure\StrSecure::get($_POST["password_confirm"] ?? null)
 ];
 ?>
 <body>
@@ -34,59 +33,14 @@ $postFields = [
                 <div class="action">
                     <form action="#" id="registration_form" method="POST">
                         <?
+                            // todo await and modal
                             $errorMessages = [];
                             if (isset($_POST["submit"])) {
-
-                                $rules = new Validator;
-
-                                $rules->overwriteDefaultMessages([
-                                        \Particle\Validator\Rule\Required::NON_EXISTENT_KEY => 'Поле не было заполнено',
-                                        \Particle\Validator\Rule\NotEmpty::EMPTY_VALUE => 'Поле не было заполнено',
-                                        \Particle\Validator\Rule\LengthBetween::TOO_SHORT => 'Поле должно быть более {{min}} символов и менее {{max}}',
-                                        \Particle\Validator\Rule\LengthBetween::TOO_LONG => 'Поле должно быть более {{min}} символов и менее {{max}}'
-                                ]);
-
-                                $rules->required('login');
-                                $rules->required('email')->email();
-                                $rules->required('password')->lengthBetween(6, null);
-                                $rules->required('password_confirm')->lengthBetween(6, null);
-
-                                $result = $rules->validate($_POST);
-                                if (!$result->isValid()) {
-                                    $errorMessages = $result->getMessages();
-                                } else {
-                                    echo 'registraciya';
+                                $authService = new \Main\Services\Auth\AuthService;
+                                [$result, $errorMessages] = $authService->register($postFields);
+                                if ($result) {
+                                    header("Location: /");//todo alert
                                 }
-
-//                            if ($_POST["password"] != $_POST["password2"]) {
-//                                $errors[] = "Повторный пароль введен неверно";
-//                            }
-//                            if (!(preg_match('/^[A-z0-9]{6,30}$/', $_POST["password"]))) {
-//                                $errors[] = "Пароль не соответствует требованиям Требования<br>
-//                                длинна не менее 6 символов<br>
-//                                длинна не более 30 символов<br>
-//                                должен состоять из латинских букв<br><br";
-//                            }
-//                            if (R::count("loginpass", "login = ?", array($_POST["login"])) > 0) {
-//                                $errors[] = "Пользователь с таким логином уже существует";
-//                            }
-//                            if (R::count("loginpass", "Email = ?", array($_POST["Email"])) > 0) {
-//                                $errors[] = "Пользователь с таким Email уже существует";
-//                            }
-
-//                            ini_set('display_errors','On');
-//                            if (empty($errors)) {
-//                                $user = R::dispense("loginpass");
-//                                $user->login = $_POST["login"];
-//                                $user->email = $_POST["Email"];
-//                                $user->password = password_hash($_POST["password"], PASSWORD_DEFAULT);
-//                                R::store($user);
-//                                echo "<div class='succes'>Вы успешно зарегистрировались!</div>";
-//
-//                            }
-//                            else {
-//                                echo "<div class='errors'>Ошибка при регистрации <br>".array_shift($errors)."</div>";
-//                            }
                             }
                         ?>
 

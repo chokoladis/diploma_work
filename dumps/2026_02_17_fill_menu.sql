@@ -1,7 +1,7 @@
 -- fields
 -- "title", "code", "link", "active", "level", "area", "parent_id"
 
-INSERT INTO menu ("title", "code", "link", "active", "level", "area")
+INSERT INTO "Menu" ("title", "code", "link", "active", "level", "area")
 VALUES
 ('Услуги', 'services', '/catalog/', true, 0, 'header'),
 ('Прайс-лист', 'prices', '/prices/', true, 0, 'header'),

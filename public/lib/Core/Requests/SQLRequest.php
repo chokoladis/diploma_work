@@ -2,7 +2,7 @@
 
 namespace Main\Core\Requests;
 
-use Main\Core\Secure\StringSecure;
+use Main\Core\Secure\StrSecure;
 
 final class SQLRequest
 {
@@ -20,10 +20,10 @@ final class SQLRequest
     public function getSort(): string { return $this->sort; }
     public function getPagination(): string { return $this->pagination; }
 
-    public function setSelect(string $value) { $this->select = StringSecure::get($value); return $this; }
-    public function addWhere(string $value) { $this->where .= StringSecure::get($value); return $this; }
-    public function setSort(string $value) { $this->sort = StringSecure::get($value); return $this; }
-    public function setPagination(string $value) { $this->pagination = StringSecure::get($value); return $this; }
+    public function setSelect(string $value) { $this->select = $value; return $this; }
+    public function addWhere(string $value) { $this->where .= $value; return $this; }
+    public function setSort(string $value) { $this->sort = StrSecure::get($value); return $this; }
+    public function setPagination(string $value) { $this->pagination = StrSecure::get($value); return $this; }
 
     public function toString(): string
     {

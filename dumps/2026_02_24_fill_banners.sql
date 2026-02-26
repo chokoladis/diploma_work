@@ -1,7 +1,7 @@
 -- fields
 -- "title", "code", "description", "section", "active",
 
-INSERT INTO banner ("title", "file", "description")
+INSERT INTO "Banner" ("title", "file", "description")
 VALUES
 ('Фотография на холсте', '{ "path": "/img/slider/siTZq1kBiWM.jpg", "name": "siTZq1kBiWM.jpg", "ext": "jpg"}'::jsonb, 'от 800 ₽'),
 ('Печать на кружке', '{ "path": "/img/slider/SJlh96DyOBg.jpg", "name": "SJlh96DyOBg.jpg", "ext": "jpg"}'::jsonb, 'от 250 ₽'),

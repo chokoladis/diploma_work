@@ -2,7 +2,7 @@
 
 namespace Main\Core\Secure;
 
-class StringSecure
+class StrSecure
 {
     public static function get(?string $value = null)
     {

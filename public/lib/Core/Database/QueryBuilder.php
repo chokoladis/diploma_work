@@ -4,7 +4,10 @@ namespace Main\Core\Database;
 
 use Main\Core\Interfaces\HasMap;
 use Main\Core\Requests\SQLRequest;
-use Main\Core\Secure\StringSecure;
+use Main\Core\Secure\StrSecure;
+use Main\DTO\Tools\CacheDTO;
+use Main\Exceptions\AddRowToTableException;
+use Main\Exceptions\IncorrectColumnsAddException;
 use Main\Tools\Database;
 use PDO;
 
@@ -19,7 +22,9 @@ class QueryBuilder
 
     private \PDO $db;
     private SQLRequest $sql;
-    protected bool $isWhereUsed = false;
+    private ?CacheDTO $cache = null;
+    private bool $isWhereUsed = false;
+    private array $params = [];
 
     public function __construct(
         protected HasMap $model
@@ -27,55 +32,74 @@ class QueryBuilder
     {
         $this->db = Database::getInstance()->connect();
 
+        $tableName = $this->model->getTableName();
         $this->sql = new SQLRequest(
-            select: "SELECT * FROM {$this->model->getTableName()}",
+            select: "SELECT * FROM \"{$tableName}\"",
             pagination: 'LIMIT '.self::DEFAULT_LIMIT
         );
     }
 
-    protected function queryWhere(string $key, string $strQuery, array $params = [])
+    public function __call($name, $arguments) {
+        if (stripos($name, 'where') !== false) {
+            if (isset($arguments[1]) && is_string($arguments[1])) {
+                $arguments[1] = StrSecure::get($arguments[1]);
+            }
+        }
+
+        if (method_exists($this, $name)) {
+            return call_user_func_array([$this, $name], $arguments);
+        }
+        throw new \BadMethodCallException("Метод $name не найден");
+    }
+
+    protected function queryWhere(string $column, mixed $value, string $operator = '=', array $params = [])
     {
+        $this->params[] = $value;
+
+        $strQuery = "{$column} {$operator} ?";
+
         if (isset($params['LOGICAL_SEPARATOR'])
             && !in_array($params['LOGICAL_SEPARATOR'], [self::LOGICAL_AND, self::LOGICAL_OR])) {
             throw new \Exception('Invalid LOGICAL statement');
         }
 
+        $key = 'WHERE';
         if ($this->isWhereUsed) {
             $logicSeparator = $params['LOGICAL_SEPARATOR'] ?? self::LOGICAL_OR;
-            $key = $logicSeparator.' '.$key;
+            $key = ' '.$logicSeparator;
         } else {
             $this->isWhereUsed = true;
         }
 
-        $this->sql->addWhere($key.' '.StringSecure::get($strQuery));
+        if (isset($params['NEGATIVE']) && $params['NEGATIVE'] === true) {
+            $key = $key . ' NOT';
+        }
+
+        $this->sql->addWhere($key.' '.$strQuery);
         return $this;
     }
 
-    public function where(string $column, mixed $value, string $operator = '=')
+    protected function where(string $column, mixed $value, string $operator = '=')
     {
-        $strQuery = $column.' '.$operator.' '.$value;
-        return $this->queryWhere('WHERE', $strQuery);
+        return $this->queryWhere($column, $value, $operator);
     }
 
-    public function andWhere(string $column, mixed $value, string $operator = '=')
+    protected function andWhere(string $column, mixed $value, string $operator = '=')
     {
-        $strQuery = $column.' '.$operator.' '.$value;
-        return $this->queryWhere('WHERE', $strQuery, ['LOGICAL_SEPARATOR' => self::LOGICAL_AND]);
+        return $this->queryWhere($column, $value, $operator, ['LOGICAL_SEPARATOR' => self::LOGICAL_AND]);
     }
 
-    public function whereNot(string $column, mixed $value, string $operator = '=')
+    protected function whereNot(string $column, mixed $value, string $operator = '=')
     {
-        $strQuery = $column.' '.$operator.' '.$value;
-        return $this->queryWhere('WHERE NOT', $strQuery);
+        return $this->queryWhere($column, $value, $operator, ['NEGATIVE' => true]);
     }
 
-    public function andWhereNot(string $column, mixed $value, string $operator = '=')
+    protected function andWhereNot(string $column, mixed $value, string $operator = '=')
     {
-        $strQuery = $column.' '.$operator.' '.$value;
-        return $this->queryWhere('WHERE NOT', $strQuery, ['LOGICAL_SEPARATOR' => self::LOGICAL_AND]);
+        return $this->queryWhere($column, $value, $operator, ['LOGICAL_SEPARATOR' => self::LOGICAL_AND, 'NEGATIVE' => true]);
     }
 
-    public function select(array $columns, array $params = [])
+    public function select(array $columns)
     {
         if (empty($columns)) {
             throw new \Exception('Empty columns');
@@ -87,7 +111,8 @@ class QueryBuilder
             $strColumn = implode(', ', $columns);
         }
 
-        $this->sql->setSelect("SELECT {$strColumn} FROM {$this->model->getTableName()}");
+        $tableName = $this->model->getTableName();
+        $this->sql->setSelect("SELECT {$strColumn} FROM \"{$tableName}\"");
         return $this;
     }
 
@@ -108,48 +133,25 @@ class QueryBuilder
         }
 
         $this->select($columns)
-            ->where($primaryField, '=', $primaryKey)
+            ->where($primaryField, $primaryKey)
             ->limit(1);
 
         $query = $this->db->query($this->sql->toString(), PDO::FETCH_OBJ);
         return $query->fetch() ?? null;
     }
 
-//    public function getList(array $params = [])
-//    {
-//        [$columns, $filters, $pagination, $sort] = $this->prepareParams($params);
-//        $queryStr = "SELECT {$columns} FROM {$this->tableName}";
-//        if (!empty($filters)) {
-//            $queryStr .= " WHERE ".$filters;
-//        }
-//        if (!empty($pagination)) {
-//            $queryStr .= $pagination;
-//        }
-//
-//        return $this->db->query($queryStr); //$query->fetchAll(); or $query->fetch();
-//    }
+    public function cache(int $ttl, ?string $key = null)
+    {
+        if (!$key) {
+            $key = json_encode($this->sql);
+        }
 
-//    public function prepareParams(array $params): array
-//    {
-//        $filters = $sort = '';
-//        $columns = isset($params['select']) && is_array($params['select']) ? implode(',', $params['select']) : '*';
-//
-//        foreach ($params['filters'] as $key => $value) {
-//            $filters .= $key . ' =: ' . $key . ' AND ';
-//        }
-//        foreach ($params['filters_raw'] as $value) {
-//            $filters .= $value;
-//        }
-//
-//        if (stripos(substr($filters, 0, -4) , 'AND') !== false) {
-//            $filters = substr($filters, 0, strlen($filters) - 4);
-//        }
-//
-//        // todo
-//        $pagination = ' LIMIT '.static::DEFAULT_LIMIT;
-//
-//        return [$columns, $filters, $pagination, $sort];
-//    }
+        if ($ttl < 1) {
+            throw new \Exception('TTL must be greater than 0');
+        }
+
+        $this->cache = new CacheDTO($ttl, $key);
+    }
 
     public function limit(int $limit)
     {
@@ -163,6 +165,46 @@ class QueryBuilder
 
     public function getResult()
     {
-        return $this->db->query($this->sql->toString(), PDO::FETCH_CLASS, get_class($this->model));
+        $sql = $this->sql->toString();
+
+        if (!empty($this->params)) {
+            $query = $this->db->prepare($sql);
+            $query->execute($this->params);
+        } else {
+            $query = $this->db->query($sql);
+        }
+
+        $this->params = [];
+        $this->isWhereUsed = false;
+
+        $query->setFetchMode(PDO::FETCH_CLASS, get_class($this->model));
+
+        return $query;
+    }
+
+    public function add(array $data)
+    {
+        $columns = array_keys($data);
+        $columnsFromTable = array_keys($this->model->map());
+
+        $arDiff = array_diff($columns, $columnsFromTable);
+        if (!empty($arDiff)) {
+            throw new IncorrectColumnsAddException();
+        }
+
+        $strColumns = implode(',', $columns);
+        foreach ($columns as $key => $value) {
+            $columns[$key] = ':'.$value;
+        }
+        $strValues = implode(',', $columns);
+
+        $query = $this->db
+            ->prepare("INSERT INTO \"{$this->model->getTableName()}\" ({$strColumns}) VALUES ({$strValues})");
+
+        if (!$query->execute($data)) {
+            throw new AddRowToTableException(); //or return [false, $errors] $query->errorInfo();
+        }
+
+        return true;
     }
 }

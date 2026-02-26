@@ -32,12 +32,6 @@ abstract class Model implements HasMap
         return $this->tableName;
     }
 
-
-    public function create()
-    {
-
-    }
-
     public function update()
     {
 
