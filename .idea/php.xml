@@ -19,10 +19,50 @@
       <path value="$PROJECT_DIR$/public/vendor/phpoption/phpoption" />
       <path value="$PROJECT_DIR$/public/vendor/graham-campbell/result-type" />
       <path value="$PROJECT_DIR$/public/vendor/vlucas/phpdotenv" />
+      <path value="$PROJECT_DIR$/public/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/public/vendor/firebase/php-jwt" />
+      <path value="$PROJECT_DIR$/public/vendor/brick/math" />
+      <path value="$PROJECT_DIR$/public/vendor/voku/portable-ascii" />
+      <path value="$PROJECT_DIR$/public/vendor/carbonphp/carbon-doctrine-types" />
+      <path value="$PROJECT_DIR$/public/vendor/psr/container" />
+      <path value="$PROJECT_DIR$/public/vendor/psr/simple-cache" />
+      <path value="$PROJECT_DIR$/public/vendor/psr/clock" />
+      <path value="$PROJECT_DIR$/public/vendor/egulias/email-validator" />
+      <path value="$PROJECT_DIR$/public/vendor/nesbot/carbon" />
+      <path value="$PROJECT_DIR$/public/vendor/illuminate/translation" />
+      <path value="$PROJECT_DIR$/public/vendor/illuminate/contracts" />
+      <path value="$PROJECT_DIR$/public/vendor/illuminate/filesystem" />
+      <path value="$PROJECT_DIR$/public/vendor/illuminate/container" />
+      <path value="$PROJECT_DIR$/public/vendor/illuminate/conditionable" />
+      <path value="$PROJECT_DIR$/public/vendor/illuminate/support" />
+      <path value="$PROJECT_DIR$/public/vendor/illuminate/macroable" />
+      <path value="$PROJECT_DIR$/public/vendor/illuminate/collections" />
+      <path value="$PROJECT_DIR$/public/vendor/illuminate/validation" />
+      <path value="$PROJECT_DIR$/public/vendor/illuminate/reflection" />
+      <path value="$PROJECT_DIR$/public/vendor/symfony/deprecation-contracts" />
+      <path value="$PROJECT_DIR$/public/vendor/symfony/mime" />
+      <path value="$PROJECT_DIR$/public/vendor/symfony/polyfill-php83" />
+      <path value="$PROJECT_DIR$/public/vendor/symfony/polyfill-intl-normalizer" />
+      <path value="$PROJECT_DIR$/public/vendor/symfony/polyfill-intl-idn" />
+      <path value="$PROJECT_DIR$/public/vendor/symfony/polyfill-php84" />
+      <path value="$PROJECT_DIR$/public/vendor/symfony/clock" />
+      <path value="$PROJECT_DIR$/public/vendor/symfony/polyfill-php85" />
+      <path value="$PROJECT_DIR$/public/vendor/symfony/finder" />
+      <path value="$PROJECT_DIR$/public/vendor/symfony/translation" />
+      <path value="$PROJECT_DIR$/public/vendor/symfony/http-foundation" />
+      <path value="$PROJECT_DIR$/public/vendor/symfony/translation-contracts" />
+      <path value="$PROJECT_DIR$/public/vendor/doctrine/lexer" />
+      <path value="$PROJECT_DIR$/public/vendor/doctrine/inflector" />
     </include_path>
   </component>
+  <component name="PhpProjectSharedConfiguration" php_language_level="8.4" />
   <component name="PhpStanOptionsConfiguration">
     <option name="transferred" value="true" />
+  </component>
+  <component name="PhpUnit">
+    <phpunit_settings>
+      <PhpUnitSettings custom_loader_path="$PROJECT_DIR$/public/vendor/autoload.php" />
+    </phpunit_settings>
   </component>
   <component name="PsalmOptionsConfiguration">
     <option name="transferred" value="true" />

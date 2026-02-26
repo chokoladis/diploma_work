@@ -19,7 +19,7 @@ class TokenService
     {
         $payload['iat'] = time();
         $payload['exp'] = time() + $this->expire;
-        $payload['iss'] = getenv('APP_NAME');
+        $payload['iss'] = env('APP_NAME');
 
         return JWT::encode($payload, $this->key, $this->algorithm);
     }

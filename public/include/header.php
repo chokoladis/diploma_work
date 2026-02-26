@@ -38,21 +38,31 @@ require_once 'before_load.php';
                         }
 
                         $authService = new AuthService();
-                        $userId = $authService->getLoggedUser();
+                        $userLogin = $authService->getLoggedUser();
                         // todo write login or name to show
 
-                        if ($userId) { ?>
-                            <li><a class="profile" href="#"><?= $userId ?></a></li>
-                            <li>
-                                <form action="#" method="POST">
-                                    <input class="exit" name="exit" type="submit" value="Выйти">
-                                </form>
+                        if ($userLogin) { ?>
+                            <li class="header-profile">
+                                <a href="#">
+                                    <img src="/img/user.png" alt="пользователь">
+                                </a>
+                                <ul class="sub-menu">
+                                    <li>
+                                        <b><?= $userLogin ?></b>
+                                    </li>
+                                    <li>
+                                        <form action="#" method="POST" class="form-logout">
+                                            <input type="hidden" name="logout" value="Y">
+                                            <button name="exit" type="submit">Выйти</button>
+                                        </form>
+                                    </li>
+                                </ul>
                             </li>
-                    <?
-                        //todo ajax logoout
-                    } else { ?>
-                        <li><a href="/auth/">Авторизация</a></li>
-                    <? } ?>
+                        <?
+                            //todo ajax logoout
+                        } else { ?>
+                            <li><a href="/auth/">Авторизация</a></li>
+                        <? } ?>
                 </ul>
             </div>
         </header>

@@ -112,7 +112,7 @@ header.glide {
     font-size: 1.5em;
     height: 10vh;
     width: 100%;
-    background: linear-gradient(110deg, #181818,#232323);
+    background: linear-gradient(110deg, #585858,#232323);
     color: #000;
     text-align: left;
     padding-left: 2em;
@@ -129,14 +129,14 @@ header.glide {
     align-items: center;
 }
 /*логотип*/
-a.logo {
+header a.logo {
     position: relative;
     margin-right: 23vh;
     width: 17vh;
     height: 6vh;
     min-width: 10vh;
 }
-.img-logo{
+header .img-logo{
     object-fit: contain;
     width: 15vh;
     height: 100%;
@@ -147,19 +147,45 @@ a.logo {
     max-width: 120px;
 }*/
 /*логотип*/
+
+
+a{
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
+
 /*меню*/
 ul,li{
     padding: 0;
     margin: 0;
     display: block;
 }
-ul.menu{
+header ul.menu{
     position: relative;
+    font-size: 14px;
 }
-ul.menu li{
+header ul.menu > li{
     margin-right: 5vh;
     letter-spacing: 0.2vh;
     text-decoration: none;
+    display: block;
+    position: relative;
+}
+header .menu > li .sub-menu {
+    display: none;
+    position: absolute;
+    /*top: 150%;*/
+    background: rgba(55, 0, 0, 0.93);
+}
+header .menu > li .sub-menu li {
+    padding: 10px;
+}
+header .menu > li .sub-menu li:hover {
+    background: rgb(99, 0, 0);
+}
+header .menu > li:hover .sub-menu,
+header .menu > li .sub-menu:hover {
     display: block;
 }
 ul.menu a{
@@ -169,59 +195,25 @@ ul.menu a{
 ul.menu a:hover{
     color: red;
 }
-a{
-    color: white;
-    text-decoration: none;
+.header-profile{
+    color: rebeccapurple;
 }
-.vk_menu .vk{
-    top: -20vh;
-    position: absolute;
-    background: whitesmoke;
-    color: black;
-    box-shadow: 0px 4px 10px;
-    height: 10vh;
-    box-sizing: border-box;
+.header-profile img {
+    width: 25px;
+    height: 25px;
 }
-.vk_menu li{
-    position: relative;
-    left: 0vh;
-    padding: 0;
-    padding-left: 1vh;
-    margin: 0;
-    height: 3vh;
-}
-.vk_menu li:hover{
-    left: 1vh;
-}
-.vk_menu .vk a{
-    color:  rgb(74,118,168);
-    cursor: pointer;
-}
-.vk_menu img{
-    width: 3vh;
-    height: 3vh;  
-    background: rgb(74,118,168);
-    border-radius: 5px;
-    box-shadow: 0px 0px 5px rgb(74,118,168);
-    border: 0px ;
-}
-.vk_menu img:hover{
-    background: red;
-    box-shadow: 0px 0px 5px red;
-}
-.exit{
-    border:0px;
+
+.form-logout button{
+    border: 0;
     font-size: 1.8vh;
     font-weight: 300;
     background: transparent;
     color: white;
 }
-.exit:hover{
+.form-logout:hover{
     color: red;
 }
-.profile{
-    color: rebeccapurple;
-}
+
 
 
 footer{

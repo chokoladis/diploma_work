@@ -13,7 +13,7 @@ class AuthService
 
     function __construct()
     {
-        $this->tokenService = new TokenService(getenv('APP_SECRET_KEY'));
+        $this->tokenService = new TokenService(env('APP_SECRET_KEY'));
     }
 
     public function logout()
@@ -29,7 +29,7 @@ class AuthService
         }
 
         $arToken = $this->tokenService->decodeToken($_COOKIE['jwt_token']);
-        return $arToken['userId'];
+        return $arToken['login'];
     }
 
     public function register(array $formData)
@@ -61,7 +61,7 @@ class AuthService
             $queryBuilder = new QueryBuilder(new User);
             $queryBuilder->add($formData);
 
-            $tokenService = new TokenService($_ENV['APP_SECRET_KEY']);
+            $tokenService = new TokenService(env('APP_SECRET_KEY'));
             $token = $tokenService->generate(['login' => $formData['login']]);
 
             setcookie('jwt_token', $token, time() + 36000000, '/');

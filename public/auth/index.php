@@ -25,7 +25,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/assets/css/auth.php';
                 <div class="slider_body">
                     <form action="#" method="post">
                         <div class="input d-flex">
-                            <img src="/img/пользователь.png" alt="пользователь" class="login">
+                            <img src="/img/user.png" alt="пользователь" class="login">
                             <input type="text" name="login" id="login" placeholder="Логин" autocomplete="login">
                         </div>
                         <div class="input d-flex">

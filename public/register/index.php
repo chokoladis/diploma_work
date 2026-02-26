@@ -55,7 +55,7 @@ $postFields = [
                         </div>
                         <div class="form-control">
                             <div class="input">
-                                <img src="/img/пользователь.png" alt="пользователь" class="login">
+                                <img src="/img/user.png" alt="пользователь" class="login">
                                 <input type="text" name="login" id="login" placeholder="Логин" value='<?= $postFields["login"]; ?>'>
                             </div>
                             <? if ($errorMessages['login']) {
