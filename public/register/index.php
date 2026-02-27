@@ -40,6 +40,7 @@ $postFields = [
                             if (isset($_POST["submit"])) {
                                 $authService = new \Main\Services\Auth\AuthService;
                                 [$result, $errorMessages] = $authService->register();
+                                //        echo "<div class='succes'>Вы успешно зарегистрировались!</div>";
                                 if ($result) {
                                     header("Location: /");//todo alert
                                 }

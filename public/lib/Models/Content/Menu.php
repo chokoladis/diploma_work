@@ -1,11 +1,13 @@
 <?php
 
-namespace Main\Models;
+namespace Main\Models\Content;
+
+use Main\Models\Model;
 
 class Menu extends Model
 {
 
-    public $id;
+    public int $id;
     public string $title;
     public string $code;
     public string $link;

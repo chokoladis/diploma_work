@@ -116,30 +116,6 @@ class QueryBuilder
         return $this;
     }
 
-    /* get one by primary key */
-    public function getOne(string|int $primaryKey, array $columns = ['*'])
-    {
-        $primaryField = null;
-        foreach ($this->model->map() as $name => $value) {
-            if (stripos($value, 'SERIAL') !== false) {
-                $primaryField = $name;
-                break;
-            }
-        }
-
-        if ((is_int($primaryKey) && $primaryKey < 1)
-            || (is_string($primaryKey) && strlen($primaryKey) < 1)) {
-            throw new \Exception('Invalid primary key');
-        }
-
-        $this->select($columns)
-            ->where($primaryField, $primaryKey)
-            ->limit(1);
-
-        $query = $this->db->query($this->sql->toString(), PDO::FETCH_OBJ);
-        return $query->fetch() ?? null;
-    }
-
     public function cache(int $ttl, ?string $key = null)
     {
         if (!$key) {
@@ -161,6 +137,31 @@ class QueryBuilder
 
         $this->sql->setPagination("LIMIT {$limit}");
         return $this;
+    }
+
+    /* get one by primary key */
+    public function getOne(string|int $primaryKey, array $columns = ['*'])
+    {
+        $primaryField = null;
+        foreach ($this->model->map() as $name => $value) {
+            if (stripos($value, 'SERIAL') !== false) {
+                $primaryField = $name;
+                break;
+            }
+        }
+
+        if ((is_int($primaryKey) && $primaryKey < 1)
+            || (is_string($primaryKey) && strlen($primaryKey) < 1)) {
+            throw new \Exception('Invalid primary key');
+        }
+
+        $this->select($columns)
+            ->where($primaryField, $primaryKey)
+            ->limit(1);
+
+        $query = $this->db->query($this->sql->toString(), PDO::FETCH_CLASS, get_class($this->model));
+        $result = $query->fetch();
+        return $result !== false ? $result : null;
     }
 
     public function getResult()

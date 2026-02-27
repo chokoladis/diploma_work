@@ -3,8 +3,7 @@
 namespace Main\Services\Content;
 
 use Main\Core\Database\QueryBuilder;
-use Main\Models\Banner;
-use Main\Models\Menu;
+use Main\Models\Content\Banner;
 
 class BannerService
 {
@@ -16,7 +15,7 @@ class BannerService
 
         $query = $queryBuilder->getResult();
         if ($query) {
-            /* @var \Main\Models\Banner $item */
+            /* @var \Main\Models\Content\Banner $item */
             $arItems = $query->fetchAll();
         }
 

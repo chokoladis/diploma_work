@@ -2,6 +2,7 @@
 
 namespace Main\Tools;
 
+use Main\Core\Enum\Database\MigrateType;
 use Main\Core\Interfaces\HasMap;
 
 class Migration
@@ -9,7 +10,11 @@ class Migration
     private \PDO $db;
     private \Psr\Log\LoggerInterface $logger;
 
-    public function __construct()
+    public function __construct(
+        private array $params,
+        private MigrateType $defalutType,
+        private ?MigrateType $rollbackType = null,
+    )
     {
         $this->db = Database::getInstance()->connect();
         $this->logger = Logger::getInstance('migration');
@@ -27,7 +32,7 @@ class Migration
 
         $strQuery = "CREATE TABLE IF NOT EXISTS \"{$table->getTableName()}\" ({$queryStr})";
 
-        if (!$this->db->query($strQuery)->execute()) {
+        if (!$this->db->exec($strQuery)) {
             $this->logger->error("Ошибка создания {$table->getTableName()} или таблица уже существует");
             return false;
         }
@@ -63,5 +68,16 @@ class Migration
         }
 
         return true;
+    }
+
+    public function run(HasMap $table)
+    {
+        if (isset($this->params[1]) && $this->params[1] === 'down') {
+            $funcName = $this->rollbackType->value;
+        } else {
+            $funcName = $this->defalutType->value;
+        }
+
+        return $this->$funcName($table);
     }
 }

@@ -1,11 +1,12 @@
 <?php
 
-namespace Main\Models;
+namespace Main\Models\Content;
+
+use Main\Models\Model;
 
 class Banner extends Model
 {
-
-    public $id;
+    public int $id;
     public string $title;
     public ?string $code = null;
     public string $file;

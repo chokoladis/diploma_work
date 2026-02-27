@@ -14,6 +14,7 @@
 - js, jquery -> vue 3
 - Подвязать телеграмм для оповещений
 - Языки русский, анг
+- Паттерны: singleton, repository, builder
 
 --- 
 # EN

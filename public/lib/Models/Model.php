@@ -11,10 +11,10 @@ abstract class Model implements HasMap
     abstract public function map(): array;
 
     public function __construct(
-        protected string $tableName = ''
+        protected ?string $tableName = null
     )
     {
-        $tableName = $tablename ?? get_called_class();
+        $tableName = $tableName ?? get_called_class();
 
         if (strpos($tableName, '/') !== false) {
             $namespace = explode('/', $tableName);
@@ -31,15 +31,4 @@ abstract class Model implements HasMap
     {
         return $this->tableName;
     }
-
-    public function update()
-    {
-
-    }
-
-    public function delete()
-    {
-
-    }
-
 }

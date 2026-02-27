@@ -3,7 +3,7 @@
 namespace Main\Services\Content;
 
 use Main\Core\Database\QueryBuilder;
-use Main\Models\Menu;
+use Main\Models\Content\Menu;
 
 class MenuService
 {
@@ -15,7 +15,7 @@ class MenuService
 
         $query = $queryBuilder->getResult();
         if ($query) {
-            /* @var \Main\Models\Menu $menuItem */
+            /* @var \Main\Models\Content\Menu $menuItem */
             $menuItems = $query->fetchAll();
         }
 

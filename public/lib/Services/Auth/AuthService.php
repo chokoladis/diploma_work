@@ -2,18 +2,17 @@
 
 namespace Main\Services\Auth;
 
-use Main\Core\Database\QueryBuilder;
-use Main\Exceptions\IncorrectColumnsAddException;
-use Main\Models\User;
-use Main\Services\ProfileService;
+use Main\Repositories\UserRepository;
 
 class AuthService
 {
     private TokenService $tokenService;
+    private UserRepository $userRepository;
 
     function __construct()
     {
         $this->tokenService = new TokenService(env('APP_SECRET_KEY'));
+        $this->userRepository = new UserRepository();
     }
 
     public function login()
@@ -24,8 +23,7 @@ class AuthService
         }
 
         $validData = $validator->validated();
-        $profileService = new ProfileService();
-        $user = $profileService->getByLogin($validData['login']);
+        $user = $this->userRepository->getByLogin($validData['login']);
         if ($user && password_verify($validData['password'], $user->password)) {
             $this->tokenService->setToken(['login' => $user->login]);
 
@@ -37,7 +35,7 @@ class AuthService
 
     public function logout()
     {
-        setcookie('jwt_token', '', 0);
+        $this->tokenService->setToken(['login' => null]);
         header('Location: /');
     }
 
@@ -62,38 +60,7 @@ class AuthService
 //        $registerRequest = new \Main\DTO\Requests\Auth\RegisterRequestDTO(
 //            ...$validator->validated(),
 //        );
-
-        $profileService = new ProfileService();
-        $profile = $profileService->getByUniqueFields($formData['login'], $formData['email']);
-        if (!empty($profile)) {
-
-            $errors = [];
-            if ($profile->login === $formData['login']) {
-                $errors['login'] = [ 'Пользователь с таким Логином уже зарегестрирован' ];
-            }
-            if ($profile->email === $formData['email']) {
-                $errors['email'] = [ 'Пользователь с таким Email уже зарегестрирован' ];
-            }
-
-            return [false, $errors];
-        }
-
-        $formData['password'] = password_hash($_POST["password"], PASSWORD_DEFAULT);
-        unset($formData['password_confirm']);
-
-        try {
-            $queryBuilder = new QueryBuilder(new User);
-            $queryBuilder->add($formData);
-
-            $this->tokenService->setToken(['login' => $formData['login']]);
-            // set message success and redirect
-
-        } catch (IncorrectColumnsAddException $e) {
-            die();
-        }
-
-        return [true, null];
-//        echo "<div class='succes'>Вы успешно зарегистрировались!</div>";
+        return $this->userRepository->add($formData);
     }
 
     private function validateRegisterData(array $formData)
