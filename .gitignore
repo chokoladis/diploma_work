@@ -1,3 +1,6 @@
 .env
 */node_modules
 */vendor
+.DS_Store
+dockerfiles/.DS_Store
+public/.DS_Store

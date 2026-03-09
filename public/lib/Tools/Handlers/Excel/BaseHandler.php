@@ -23,6 +23,7 @@ abstract class BaseHandler implements HandlerExcel
         try {
             $this->isValidFile();
             foreach($this->readRow() as $row) {
+
                 var_dump('<br> test', $row);
             }
         } catch (UploadFileException $e) {

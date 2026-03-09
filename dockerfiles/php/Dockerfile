@@ -17,6 +17,7 @@ FROM php:8.4-fpm-alpine
 WORKDIR /var/www/redmouse
 
 COPY ./dockerfiles/php/conf/fpm.conf /usr/local/etc/php-fpm.d/www.conf
+COPY ./dockerfiles/php/conf/xdebug.ini /usr/local/etc/php-fpm/conf.d/docker-php-ext-xdebug.ini
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 ENV PATH="$PATH:/usr/local/bin"
@@ -34,6 +35,7 @@ RUN set -eux; \
             icu-dev \
             libxml2-dev \
             curl-dev && \
+    pecl install xdebug && \
     apk add --no-cache postgresql-dev \
         bash \
         libzip \
@@ -52,5 +54,6 @@ RUN set -eux; \
         sockets \
         curl; \
     docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql && \
+    docker-php-ext-enable xdebug && \
     apk del .build-deps; \
     apk add --no-cache ca-certificates && update-ca-certificates

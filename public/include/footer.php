@@ -72,7 +72,6 @@
             new WOW().init();
         </script>
         <script src="/assets/js/slider.js"></script>
-        <script src="/assets/js/ask.js"></script>
         <!--todo load other-->
 
     </body>

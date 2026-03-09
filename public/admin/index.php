@@ -38,6 +38,14 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/include/before_load.php';
                     <span>Загрузите excel файл</span>
                     <input type="file" name="file">
                 </label>
+                <label>
+                    <span>Заменить</span>
+                    <input type="checkbox" name="type_fill" value="replace">
+                </label>
+                <label>
+                    <span>Добавить</span>
+                    <input type="checkbox" name="type_fill" value="add">
+                </label>
                 <input type="submit" name="load-banners" value="Apply">
             </form>
             <?

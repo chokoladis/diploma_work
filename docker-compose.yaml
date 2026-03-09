@@ -17,15 +17,8 @@ services:
     #    ports:
     #      - '9000:9000'
     volumes:
-      - ./dockerfiles/php/conf/php.ini:/usr/local/etc/php/php.ini-production
-      - ./dockerfiles/php/conf/php.ini:/usr/local/etc/php/php.ini-development
       - .:/var/www/redmouse
     container_name: redmouse_php
-#    deploy:
-#      resources:
-#        limits:
-#          cpus: '4.0'
-#          memory: 1G
 
   db:
     image: postgres:18
@@ -46,16 +39,3 @@ services:
       PGADMIN_DEFAULT_EMAIL: '${PGADMIN_EMAIL}'
       PGADMIN_DEFAULT_PASSWORD: '${PGADMIN_DEFAULT_PASSWORD}'
       PMA_HOST: db
-
-#  redis:
-#    build: ./dockerfiles/redis
-#    volumes:
-#      - .:/var/www/redmouse
-#    container_name: redmouse_redis
-#    ports:
-#      - "6379:6379"
-#    deploy:
-#      resources:
-#        limits:
-#          #          cpus: '2.0'
-#          memory: 400MB
