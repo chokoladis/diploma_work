@@ -8,7 +8,7 @@
     }
     .about .img{
         height: 40vh;
-        background: url(/img/about/redmouse.jpeg) no-repeat center center / cover;
+        background: url(/assets/img/about/redmouse.jpeg) no-repeat center center / cover;
     }
     .printers{
         display: flex;

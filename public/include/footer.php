@@ -33,7 +33,7 @@
                         <h4 class="upper animated wow slideInLeft animated"
                             style="visibility: visible; animation-name: slideInLeft;">Соцсети</h4>
                         <a href="https://vk.com/redmouse">
-                            <img src="/img/вк.png" alt="" class="animated wow slideInLeft animated"
+                            <img src="/assets/img/вк.png" alt="" class="animated wow slideInLeft animated"
                                  style="visibility: visible; animation-name: slideInLeft;"></a>
                     </div>
                     <div class="map">

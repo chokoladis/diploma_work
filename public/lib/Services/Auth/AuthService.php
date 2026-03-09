@@ -3,6 +3,8 @@
 namespace Main\Services\Auth;
 
 use Main\Repositories\UserRepository;
+use Main\Tools\Validators\Auth\AuthValidator;
+use Main\Tools\Validators\Auth\RegisterValidator;
 
 class AuthService
 {
@@ -17,7 +19,7 @@ class AuthService
 
     public function login()
     {
-        $validator = $this->validateLoginData($_POST);
+        $validator = new AuthValidator(['login', 'password'])->validate();
         if ($validator->fails()) {
             return [false, $validator->errors()->toArray()];
         }
@@ -51,7 +53,8 @@ class AuthService
 
     public function register()
     {
-        $validator = $this->validateRegisterData($_POST);
+        $validator = new RegisterValidator(['login', 'email', 'password', 'password_confirm'])
+            ->validate();
         if ($validator->fails()) {
             return [false, $validator->errors()->toArray()];
         }
@@ -61,39 +64,5 @@ class AuthService
 //            ...$validator->validated(),
 //        );
         return $this->userRepository->add($formData);
-    }
-
-    private function validateRegisterData(array $formData)
-    {
-        $validation = \Main\Tools\Validator::get();
-        return $validation->make($formData, [
-            // todo composer require illuminate/database for autocheck in db ?
-            'login'            => 'required|min:2', //unique:User,login
-            'email'            => 'required|email', //unique:User,email
-            'password'         => [
-                'required',
-                'min:8',
-                'regex:/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%\^&*()~\-_\.\,]).+$/u',
-            ],
-            'password_confirm' => 'required|min:8|same:password',
-        ], [
-            'required'         => 'Заполните поле :attribute',
-            'email'            => 'Почта указана неверно',
-            'min'              => 'Минимум :min символов',
-            'same'             => 'Пароли не совпадают',
-            'password.regex'   => 'Пароль слишком простой (нужны буквы, цифры и спецсимволы)',
-        ]);
-    }
-
-    private function validateLoginData(array $formData)
-    {
-        $validation = \Main\Tools\Validator::get();
-        return $validation->make($formData, [
-            'login'            => 'required|min:2',
-            'password'         => 'required|min:8',
-        ], [
-            'required'         => 'Заполните поле :attribute',
-            'min'              => 'Минимум :min символов',
-        ]);
     }
 }

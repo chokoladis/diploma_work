@@ -39,7 +39,7 @@
     .title_order{
         text-shadow: 0px 0px 3px rgba(218, 161, 255, 0.459);
         color: transparent;
-        background: url(/img/7HIt0xK.jpg) repeat;
+        background: url(/assets/img/7HIt0xK.jpg) repeat;
         background-size: cover;
         -webkit-background-clip: text;
     }

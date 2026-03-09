@@ -34,10 +34,10 @@
                     <p class="wow animated fadeInUp" data-wow-duration="2s">Каждое печатное оборудование позволяет обеспечить высокое качество печати.</p>
 
                     <div class="printers wow animated bounceInLeft" data-wow-duration="3s">
-                        <img src="/img/about/c364e.jpg" alt="принтер">
-                        <img src="/img/about/medium.jpg" alt="принтер">
-                        <img src="/img/about/printer3.jpg" alt="принтер">
-                        <img src="/img/about/Lk6OH4pwHW4.jpg" alt="принтер">
+                        <img src="/assets/img/about/c364e.jpg" alt="принтер">
+                        <img src="/assets/img/about/medium.jpg" alt="принтер">
+                        <img src="/assets/img/about/printer3.jpg" alt="принтер">
+                        <img src="/assets/img/about/Lk6OH4pwHW4.jpg" alt="принтер">
 
                     </div>
                 </div>

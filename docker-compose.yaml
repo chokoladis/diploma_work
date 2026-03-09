@@ -36,12 +36,7 @@ services:
       POSTGRES_USER: '${DB_USERNAME}'
       POSTGRES_PASSWORD: '${DB_PASSWORD}'
       POSTGRES_DB: '${DB_DATABASE}'
-#    deploy:
-#      resources:
-#        limits:
-#          cpus: '2.0'
-#          memory: 2G
-#
+
   pgadmin:
     image: dpage/pgadmin4:9.12
     container_name: redmouse_pgadmin

@@ -29,7 +29,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/assets/css/tracking.php';
                         echo "<div class='error'>
                                     <div class='img'>
                                         <p>ошибка</p>
-                                        <img src='/img/error.jpg'>
+                                        <img src='/assets/img/error.jpg'>
                                         <p class='down'>пнятьненко?</p>
                                     </div>
                                     <span>По вашему запросу трек-кода не найдено</span>

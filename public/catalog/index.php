@@ -14,7 +14,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/assets/css/catalog.php';
         <div class="container">
             <div class="main">
                 <div class="item">
-                    <img src="/img/slider/qj_4dH06E7E.jpg" class="wow slideInLeft" data-wow-duration="2s">
+                    <img src="/assets/img/slider/qj_4dH06E7E.jpg" class="wow slideInLeft" data-wow-duration="2s">
                     <div class="title_item wow slideInRight" data-wow-duration="4s">
                         Наружняя реклама
                     </div>
@@ -26,7 +26,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/assets/css/catalog.php';
                     </div>
                 </div>
                 <div class="item">
-                    <img src="/img/slider/30AMtc6XGf4.jpg" class="wow slideInLeft" data-wow-duration="2s">
+                    <img src="/assets/img/slider/30AMtc6XGf4.jpg" class="wow slideInLeft" data-wow-duration="2s">
                     <div class="title_item wow slideInRight" data-wow-duration="4s">
                         Рекламная конструкция
                     </div>
@@ -38,7 +38,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/assets/css/catalog.php';
                     </div>
                 </div>
                 <div class="item">
-                    <img src="/img/slider/c_ZIWAEcXnU.jpg" class="wow slideInLeft" data-wow-duration="2s">
+                    <img src="/assets/img/slider/c_ZIWAEcXnU.jpg" class="wow slideInLeft" data-wow-duration="2s">
                     <div class="title_item wow slideInRight" data-wow-duration="4s">
                         Полиграфия
                     </div>
@@ -54,7 +54,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/assets/css/catalog.php';
                     </div>
                 </div>
                 <div class="item">
-                    <img src="/img/slider/SJlh96DyOBg.jpg" class="wow slideInLeft" data-wow-duration="2s">
+                    <img src="/assets/img/slider/SJlh96DyOBg.jpg" class="wow slideInLeft" data-wow-duration="2s">
                     <div class="title_item wow slideInRight" data-wow-duration="4s">
                         Сувенирная продукция
                     </div>
@@ -66,7 +66,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/assets/css/catalog.php';
                     </div>
                 </div>
                 <div class="item">
-                    <img src="/img/slider/4-x3uC3c0BQ.jpg" class="wow slideInLeft" data-wow-duration="2s">
+                    <img src="/assets/img/slider/4-x3uC3c0BQ.jpg" class="wow slideInLeft" data-wow-duration="2s">
                     <div class="title_item wow slideInRight" data-wow-duration="4s">
                         Услуги для студентов
                     </div>

@@ -1,6 +1,6 @@
 <?php
 
-namespace Main\Exceptions;
+namespace Main\Core\Exceptions;
 
 class AddRowToTableException extends \Exception
 {

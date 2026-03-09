@@ -27,7 +27,7 @@ class User extends Model
             'password' => 'VARCHAR(200) NOT NULL',
             'email_verified' => 'BOOLEAN NOT NULL DEFAULT FALSE',
             'active' => 'BOOLEAN NOT NULL DEFAULT TRUE',
-            'role' => 'VARCHAR(20) NULL DEFAULT user',
+            'role' => 'VARCHAR(20) NULL DEFAULT \'user\'',
             //todo mb other table with detail permissions
 
             'created_at' => 'TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP',

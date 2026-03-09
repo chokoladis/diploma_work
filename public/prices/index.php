@@ -34,7 +34,7 @@ error_reporting('E_ALL');?>
                 <li><a href="otz.php">Отзывы</a></li>
                 <li><a href="trek.php">Трек-код</a></li>
                 <li><a href="about.php">О нас</a></li>
-                <li class="vk_menu"><a ><img src="css/img/вк.png" alt=""></a>
+                <li class="vk_menu"><a ><img src="css/assets/img/вк.png" alt=""></a>
                     <ul class="vk">
                         <li><a href="https://vk.com/redmouse" target="_blank">Главный директор</a></li>
                         <li><a href="https://vk.com/redmouse_56" target="_blank">Группа</a></li>
@@ -106,7 +106,7 @@ error_reporting('E_ALL');?>
             <div class="footer_item">
                 <h4 class="upper animated wow slideInLeft animated" style="visibility: visible; animation-name: slideInLeft;">Соцсети</h4>
                 <a href="https://vk.com/redmouse">
-                    <img src="css/img/вк.png" alt="" class="animated wow slideInLeft animated" style="visibility: visible; animation-name: slideInLeft;"></a>
+                    <img src="css/assets/img/вк.png" alt="" class="animated wow slideInLeft animated" style="visibility: visible; animation-name: slideInLeft;"></a>
             </div>
             <div class="map">
                 <h4 class="upper animated wow slideInLeft animated" style="visibility: visible; animation-name: slideInLeft;">Геолокация</h4>

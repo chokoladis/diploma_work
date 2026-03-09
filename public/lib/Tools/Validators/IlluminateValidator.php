@@ -1,13 +1,13 @@
 <?php
 
-namespace Main\Tools;
+namespace Main\Tools\Validators;
 
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Translation\FileLoader;
 use Illuminate\Translation\Translator;
 use Illuminate\Validation\Factory;
 
-class Validator
+class IlluminateValidator
 {
     public static function get() : Factory
     {

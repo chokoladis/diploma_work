@@ -25,14 +25,14 @@ class Migration
         $map = $table->map();
         $lastField = array_key_last($map);
         $queryStr = '';
-        foreach ($table->map() as $field => $type) {
+        foreach ($map as $field => $type) {
             $del = $lastField === $field ? '' : ',';
             $queryStr .= $field.' '.$type.$del;
         }
 
         $strQuery = "CREATE TABLE IF NOT EXISTS \"{$table->getTableName()}\" ({$queryStr})";
 
-        if (!$this->db->exec($strQuery)) {
+        if (false === $this->db->exec($strQuery)) {
             $this->logger->error("Ошибка создания {$table->getTableName()} или таблица уже существует");
             return false;
         }
@@ -52,7 +52,7 @@ class Migration
         }
         $strQuery .= "{$indexName} ON \"{$table->getTableName()}\" ({$strFields})";
 
-        if (!$this->db->query($strQuery)->execute()) {
+        if (false === $this->db->exec($strQuery)) {
             $this->logger->error("Ошибка создания индекса {$indexName}");
             return false;
         }
@@ -62,7 +62,7 @@ class Migration
 
     public function dropTable(HasMap $table)
     {
-        if (!$this->db->query("DROP TABLE IF EXISTS \"{$table->getTableName()}\"")->execute()) {
+        if (false === $this->db->exec("DROP TABLE IF EXISTS \"{$table->getTableName()}\"")) {
             $this->logger->error("Ошибка удаления {$table->getTableName()} или таблицы уже не существует");
             return false;
         }

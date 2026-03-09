@@ -49,7 +49,7 @@ $postFields = [
 
                         <div class="form-control">
                             <div class="input">
-                                <img src="/img/email.png" alt="Email" class="login">
+                                <img src="/assets/img/email.png" alt="Email" class="login">
                                 <input type="email" name="email" id="email" placeholder="Email" value='<?= $postFields['email']; ?>'>
                             </div>
                             <? if ($errorMessages['email']) {
@@ -58,7 +58,7 @@ $postFields = [
                         </div>
                         <div class="form-control">
                             <div class="input">
-                                <img src="/img/user.png" alt="пользователь" class="login">
+                                <img src="/assets/img/user.png" alt="пользователь" class="login">
                                 <input type="text" name="login" id="login" placeholder="Логин" value='<?= $postFields["login"]; ?>'>
                             </div>
                             <? if ($errorMessages['login']) {
@@ -67,7 +67,7 @@ $postFields = [
                         </div>
                         <div class="form-control">
                             <div class="input">
-                                <img src="/img/пароль.png" alt="пароль" class="password">
+                                <img src="/assets/img/пароль.png" alt="пароль" class="password">
                                 <input type="password" name="password" id="password" placeholder="Пароль" value='<?= $postFields["password"]; ?>'>
                             </div>
                             <? if ($errorMessages['password']) {
@@ -76,7 +76,7 @@ $postFields = [
                         </div>
                         <div class="form-control">
                             <div class="input">
-                                <img src="/img/пароль.png" alt="Подтверждение пароля" class="password">
+                                <img src="/assets/img/пароль.png" alt="Подтверждение пароля" class="password">
                                 <input type="password" name="password_confirm" id="password_confirm" placeholder="Повторите пароль" value='<?= $postFields["password_confirm"]; ?>'>
                             </div>
                             <? if ($errorMessages['password_confirm']) {

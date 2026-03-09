@@ -38,7 +38,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/assets/css/auth.php';
                     ?>
                     <div class="form-control">
                         <div class="input d-flex">
-                            <img src="/img/user.png" alt="пользователь" class="login">
+                            <img src="/assets/img/user.png" alt="пользователь" class="login">
                             <input type="text" name="login" id="login" placeholder="Логин" autocomplete="login">
                         </div>
                         <div class="input-error">
@@ -51,7 +51,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/assets/css/auth.php';
                     </div>
                     <div class="form-control">
                         <div class="input d-flex">
-                            <img src="/img/пароль.png" alt="пароль" class="password">
+                            <img src="/assets/img/пароль.png" alt="пароль" class="password">
                             <input type="password" name="password" id="password" placeholder="Пароль" autocomplete="password">
                         </div>
                         <div class="input-error">

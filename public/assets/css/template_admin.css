@@ -48,6 +48,13 @@ input{
     position: relative;
     align-items: center;
 }
+.d-flex{
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -webkit-flex;
+    display: -o-flex;
+    display: flex;
+}
 .justify-content-center{
     justify-content: center;
 }
@@ -66,58 +73,13 @@ h1,h2,h3,h4,h5,h6{
     margin: 0;
     padding: 0;
 }
-.offer, .slider{
-    width: 50%;
-    position: relative;
-    height: 100%;
-}
-
-.offer{
-    background: linear-gradient(124deg,#0b0b0b,#171717);
-    position: relative;
-    padding-left: 5%;
-    overflow: hidden;
-}
-.offer_body{
-    width: 600px;
-    top: 10vh;
-    position: absolute;
-}
-.show{
-    font-family: Arial, Helvetica, sans-serif;
-    padding: 1vh 3vh;
-    border: 2px solid rgb(143, 143, 143);
-    color: black;
-    z-index: 100;
-    width: 23vh;
-    font-size: 1.4vh;
-    margin: 1vh auto;
-    box-sizing: border-box;
-
-}
 
 header{
     z-index: 1000;
     width: 100%;
-    height: 10vh;
-    background: linear-gradient(110deg, #181818,rgb(32,32,32));
-    box-shadow: 0px 2px 50px rgba(255, 0, 0, 0.2);
     position: fixed;
     top: 0;
-}
-header.glide {
-    box-shadow: 0px 2px 1px rgba(255, 0, 0, 0.2);
-}
-section.first {
-    margin-top: 16vh;
-    position: relative;
-}
-.d-flex{
-    display: -moz-flex;
-    display: -ms-flex;
-    display: -webkit-flex;
-    display: -o-flex;
-    display: flex;
+    height: 60px;
 }
 /*логотип*/
 header a.logo {
@@ -134,11 +96,14 @@ header .img-logo{
     max-width: 150px;
     min-width: 50px;
 }
-/*header .logo img {
-    max-width: 120px;
-}*/
 /*логотип*/
 
+main{
+    margin-top: 60px;
+}
+main form {
+    margin-top: 20px;
+}
 
 a{
     color: white;
@@ -156,29 +121,6 @@ header ul.menu{
     position: relative;
     font-size: 14px;
 }
-header ul.menu > li{
-    margin-right: 5vh;
-    letter-spacing: 0.2vh;
-    text-decoration: none;
-    display: block;
-    position: relative;
-}
-header .menu > li .sub-menu {
-    display: none;
-    position: absolute;
-    /*top: 150%;*/
-    background: rgba(55, 0, 0, 0.93);
-}
-header .menu > li .sub-menu li {
-    padding: 10px;
-}
-header .menu > li .sub-menu li:hover {
-    background: rgb(99, 0, 0);
-}
-header .menu > li:hover .sub-menu,
-header .menu > li .sub-menu:hover {
-    display: block;
-}
 ul.menu a{
     font-weight: 300;
     font-size: 1.8vh;
@@ -186,26 +128,6 @@ ul.menu a{
 ul.menu a:hover{
     color: red;
 }
-.header-profile{
-    color: rebeccapurple;
-}
-.header-profile img {
-    width: 25px;
-    height: 25px;
-}
-
-.form-logout button{
-    border: 0;
-    font-size: 1.8vh;
-    font-weight: 300;
-    background: transparent;
-    color: white;
-}
-.form-logout:hover{
-    color: red;
-}
-
-
 
 footer{
     width: 100%;

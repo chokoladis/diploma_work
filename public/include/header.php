@@ -25,7 +25,7 @@ require_once 'before_load.php';
         <header>
             <div class="container d-flex align-items-center">
                 <a href="/" class="logo">
-                    <img src="/img/logo.png" class="img-logo">
+                    <img src="/assets/img/logo.png" class="img-logo">
                 </a>
                 <ul class="menu d-flex">
                     <?
@@ -44,7 +44,7 @@ require_once 'before_load.php';
                         if ($userLogin) { ?>
                             <li class="header-profile">
                                 <a href="#">
-                                    <img src="/img/user.png" alt="пользователь">
+                                    <img src="/assets/img/user.png" alt="пользователь">
                                 </a>
                                 <ul class="sub-menu">
                                     <li>
