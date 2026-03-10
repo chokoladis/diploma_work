@@ -10,6 +10,8 @@ require_once  $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable($_SERVER['DOCUMENT_ROOT'] . '/../');
 $dotenv->load();
 
+session_start();
+//todo handler to check access to auth/register
 if ($_POST['logout'] === 'Y') {
     $authService = new AuthService();
     $authService->logout();

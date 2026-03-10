@@ -27,7 +27,26 @@ body{
     background-color: rgba(182, 182, 182, 0.445);
     border-radius: 30px;
 }
-
+.global-message {
+    position: fixed;
+    bottom: 20px;
+    z-index: 1000;
+    left: 0;
+    right: 0;
+    margin: 0px auto;
+    width: 50%;
+}
+.global-message .alert {
+    display: flex;
+    align-items: center;
+    margin: 0;
+}
+.global-message .alert svg {
+    margin-right: 10px;
+}
+.global-message .alert button {
+    margin-left: auto;
+}
 a, a:active, a:hover{
     text-decoration: none;
     transition: all 0.5s ease;

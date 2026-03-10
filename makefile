@@ -12,7 +12,7 @@ reload:
 	make up
 
 db-restore:
-	gzip -c dumps/redmouse.sql.gz | docker exec -i redmouse_pgsql pg_dump -U$(DB_USERNAME) -d$(DB_DATABASE) -f;
+	gunzip -c dumps/redmouse.sql.gz | docker exec -i redmouse_pgsql psql -U$(DB_USERNAME) -d$(DB_DATABASE);
 db-export:
 	docker exec redmouse_pgsql pg_dump -U$(DB_USERNAME) $(DB_DATABASE) | gzip > dumps/redmouse_$(shell date +%F).sql.gz
 

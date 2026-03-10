@@ -47,6 +47,7 @@ RUN set -eux; \
         pdo \
         pdo_pgsql \
         pgsql \
+        zip \
         mbstring \
         bcmath \
         intl \
@@ -54,6 +55,7 @@ RUN set -eux; \
         sockets \
         curl; \
     docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql && \
+    docker-php-ext-configure zip && \
     docker-php-ext-enable xdebug && \
     apk del .build-deps; \
     apk add --no-cache ca-certificates && update-ca-certificates

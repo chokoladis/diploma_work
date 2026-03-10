@@ -10,6 +10,7 @@ use Main\Core\Secure\StrSecure;
 use Main\DTO\Tools\CacheDTO;
 use Main\Tools\Database;
 use PDO;
+use PDOStatement;
 
 class QueryBuilder
 {
@@ -164,7 +165,7 @@ class QueryBuilder
         return $result !== false ? $result : null;
     }
 
-    public function getResult()
+    public function getResult() : PDOStatement|false
     {
         $sql = $this->sql->toString();
 

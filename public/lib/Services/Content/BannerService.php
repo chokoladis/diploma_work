@@ -5,7 +5,7 @@ namespace Main\Services\Content;
 use Main\Core\Database\QueryBuilder;
 use Main\Models\Content\Banner;
 
-class BannerService
+final class BannerService
 {
     public static function get()
     {

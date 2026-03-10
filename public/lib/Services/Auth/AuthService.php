@@ -63,6 +63,13 @@ class AuthService
 //        $registerRequest = new \Main\DTO\Requests\Auth\RegisterRequestDTO(
 //            ...$validator->validated(),
 //        );
-        return $this->userRepository->add($formData);
+        [$result, $errors] = $this->userRepository->add($formData);
+        if ($result) {
+            $this->tokenService->setToken(['login' => $formData['login']]);
+
+            return [true, null];
+        }
+
+        return [false, $errors];
     }
 }

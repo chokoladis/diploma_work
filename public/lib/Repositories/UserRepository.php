@@ -24,19 +24,17 @@ class UserRepository
             return [false, $errors];
         }
 
-        $formData['password'] = password_hash($_POST["password"], PASSWORD_DEFAULT);
+        $formData['password'] = password_hash($_POST["password"], PASSWORD_ARGON2ID);
         unset($formData['password_confirm']);
 
         try {
             $queryBuilder = new QueryBuilder(new User);
             $queryBuilder->add($formData);
 
-            $this->tokenService->setToken(['login' => $formData['login']]);
-
             return [true, null];
 
         } catch (\Exception $e) {
-            Logger::getInstance('user')->error([$e->getMessage(), $e->getLine(), $e->getFile()]);
+            Logger::getInstance('user')->error($e->getMessage(), [$e->getLine(), $e->getFile()]);
             return [false, ['login' => ['system_error']]];
         }
     }
@@ -57,7 +55,7 @@ class UserRepository
         return null;
     }
 
-    public function getByLogin(string $login)
+    public function getByLogin(string $login) : User|false
     {
         $queryBuilder = new QueryBuilder(new User);
 

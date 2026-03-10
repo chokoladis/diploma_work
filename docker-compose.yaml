@@ -14,9 +14,8 @@ services:
     build:
       context: .
       dockerfile: dockerfiles/php/Dockerfile
-    #    ports:
-    #      - '9000:9000'
     volumes:
+      - ./dockerfiles/php/conf/php.ini:/usr/local/etc/php/php.ini
       - .:/var/www/redmouse
     container_name: redmouse_php
 

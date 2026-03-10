@@ -14,9 +14,11 @@ class User extends Model
     public string $password;
     public bool $email_verified = false;
     public bool $active;
+    public string $role;
     public string $created_at;
     public ?string $updated_at = null;
 
+    #[\Override]
     public function map() : array
     {
         return [
@@ -24,7 +26,7 @@ class User extends Model
             'login' => 'VARCHAR(60) NOT NULL UNIQUE',
             'email' => 'VARCHAR(200) NOT NULL UNIQUE',
             'phone' => 'VARCHAR(12) NULL',
-            'password' => 'VARCHAR(200) NOT NULL',
+            'password' => 'VARCHAR(255) NOT NULL',
             'email_verified' => 'BOOLEAN NOT NULL DEFAULT FALSE',
             'active' => 'BOOLEAN NOT NULL DEFAULT TRUE',
             'role' => 'VARCHAR(20) NULL DEFAULT \'user\'',

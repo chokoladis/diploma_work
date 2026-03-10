@@ -3,7 +3,6 @@
 use Main\Services\Auth\AuthService;
 
 require_once 'before_load.php';
-
     ob_start();
 ?>
 <!DOCTYPE html>
@@ -15,6 +14,7 @@ require_once 'before_load.php';
         <!--todo title from env-->
         <title><?= \Main\Services\Content\PageService::getTagPageTitle() ?></title>
 
+        <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="/assets/css/animate.css">
         <link rel="stylesheet" href="/assets/css/normalize.css">
         <link rel="stylesheet" href="/assets/css/template.css">
