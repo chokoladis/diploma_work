@@ -4,3 +4,4 @@
 .DS_Store
 dockerfiles/.DS_Store
 public/.DS_Store
+public/uploads

@@ -17,7 +17,7 @@ class Logger implements LoggerInterface
             mkdir($dirPath, recursive: true);
         }
 
-        $this->filePath = $dirPath.$logFile;
+        $this->filePath = $dirPath.$logFile.'.txt';
     }
 
     static function getInstance(string $logFile): LoggerInterface
@@ -47,7 +47,8 @@ class Logger implements LoggerInterface
     public function error(\Stringable|string $message, array $context = []): void
     {
 //        todo color ?
-        file_put_contents($this->filePath, print_r(['message' => $message,'context' => $context]) . PHP_EOL, FILE_APPEND);
+        $log = date('Y-m-d H:i:s') . print_r(['message' => $message,'context' => $context], true) . PHP_EOL;
+        file_put_contents( $this->filePath, $log, FILE_APPEND);
     }
 
     public function warning(\Stringable|string $message, array $context = []): void

@@ -31,6 +31,5 @@ require_once 'before_load.php';
                         </ul>
                     </div>
                 </nav>
-
             </div>
         </header>

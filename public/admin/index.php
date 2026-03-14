@@ -10,5 +10,5 @@ require_once 'include/header.php';
         </div>
     </main>
 <?php
-    require_once $_SERVER['DOCUMENT_ROOT'].'/include/footer.php';
+    require_once 'include/footer.php';
 ?>

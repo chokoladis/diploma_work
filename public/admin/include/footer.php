@@ -16,6 +16,5 @@
     </body>
 </html>
 <?php
-
-    require_once $_SERVER['DOCUMENT_ROOT'].'/include/after_load.php';
+    require_once 'after_load.php';
 ?>

@@ -1,5 +1,4 @@
 <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/include/header.php'; ?>
-
     <section class="first" id="first">
         <div class="content">
             <div class="container d-flex">
@@ -40,7 +39,7 @@
                                     $fileInfo = json_decode($banner->file, true);
                                     ?>
                                     <div class="slider_item <?=$class?>">
-                                        <img src="<?= $fileInfo['path']?>" alt="">
+                                        <img src="<?='/uploads/'. $fileInfo['directory'].'/'.$fileInfo['name']?>" alt="">
                                         <div class="title_slider ">
                                             <div class="title_img"><?=$banner->title?></div>
                                             <div class="title_price"><?=$banner->description?></div>

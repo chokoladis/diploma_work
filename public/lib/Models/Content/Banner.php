@@ -11,6 +11,7 @@ class Banner extends Model
     public ?string $code = null;
     public string $file;
     public string $description;
+    public ?string $link = null;
     public ?int $sort = null;
 
     public ?string $section = null;
@@ -25,6 +26,7 @@ class Banner extends Model
             'code' => 'VARCHAR(50) NULL',
             'file' => 'JSONB NOT NULL',
             'description' => 'VARCHAR(255) NULL',
+            'link' => 'VARCHAR(150) NULL',
             'sort' => 'SMALLINT NULL DEFAULT 100',
             'section' => 'VARCHAR(40) NULL',
             'active' => 'BOOLEAN NOT NULL DEFAULT TRUE',

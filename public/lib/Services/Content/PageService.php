@@ -9,17 +9,17 @@ class PageService
 
     static function getTagPageTitle(): string
     {
-        return self::$tagPageTitle;
+        return static::$tagPageTitle;
     }
 
     static function setTitle(string $title)
     {
-        self::$pageTitle = $title;
+        static::$pageTitle = $title;
     }
 
     static function loadData(string $content)
     {
-        $content = str_replace(self::$tagPageTitle, self::$pageTitle, $content);
+        $content = str_replace(static::$tagPageTitle, static::$pageTitle, $content);
 //        todo other
         return $content;
     }

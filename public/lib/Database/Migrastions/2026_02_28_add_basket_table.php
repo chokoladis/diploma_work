@@ -1,6 +1,6 @@
 <?php
 
-require_once $_SERVER['DOCUMENT_ROOT']."/include/before_load.php";
+require_once __DIR__."/../../../include/before_load.php";
 
 use Main\Tools\Migration;
 
