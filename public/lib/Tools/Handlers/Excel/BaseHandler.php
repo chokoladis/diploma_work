@@ -22,6 +22,7 @@ abstract class BaseHandler implements HandlerExcel
 
     public function __construct(
         private string $field,
+        protected bool $isSkipFirstRow = true,
     )
     {
         $this->tempDir = $_SERVER['DOCUMENT_ROOT'].'/uploads/tmp/excel/';
@@ -71,7 +72,7 @@ abstract class BaseHandler implements HandlerExcel
         $isFirst = true;
         while ($row = fgetcsv($resource, escape: '')) {
 
-            if ($isFirst) {
+            if ($this->isSkipFirstRow && $isFirst) {
                 $isFirst = false;
                 continue;
             }

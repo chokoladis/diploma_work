@@ -21,7 +21,7 @@ class Discount extends Model
         //        todo draft table
         return [
             'id' => 'SERIAL PRIMARY KEY',
-            'order_id' => 'INT NOT NULL REFERENCES Order(id) ON UPDATE CASCADE ON DELETE CASCADE',
+            'order_id' => "INT NOT NULL REFERENCES \"Order\"(id) ON UPDATE CASCADE ON DELETE CASCADE",
             'title' => 'VARCHAR(150) NOT NULL',
             'type' => 'VARCHAR(50) NOT NULL',
             'percent' => 'SMALLINT NOT NULL',

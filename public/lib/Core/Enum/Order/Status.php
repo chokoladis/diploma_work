@@ -6,5 +6,6 @@ Enum Status:string {
     case CREATED = 'Создан';
     case HANDLE = 'Обрабатывается';
     case IN_WORK = 'В работе';
-    case READY = 'Готов';
+    case READY = 'Готов к выдаче';
+    case COMPLETED = 'Выполнен';
 }

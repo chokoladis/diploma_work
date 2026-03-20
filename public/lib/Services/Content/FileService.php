@@ -31,4 +31,20 @@ class FileService
             return false;
         }
     }
+
+    public static function getPath(string $rawFile)
+    {
+        if (!json_validate($rawFile)){
+            return null;
+        }
+
+        $fileInfo = json_decode($rawFile, true);
+        if (!empty($fileInfo['path']))
+            return $fileInfo['path'];
+
+        if (!empty($fileInfo['directory']) && !empty($fileInfo['name']))
+            return '/uploads/'. $fileInfo['directory'].'/'.$fileInfo['name'];
+
+//        return default src with 404
+    }
 }

@@ -16,10 +16,10 @@ class Basket extends Model
 
     public function map() : array
     {
-        //        todo draft table
         return [
             'id' => 'SERIAL PRIMARY KEY',
-            'order_id' => 'INT NOT NULL REFERENCES \"Order\"(id) ON UPDATE CASCADE ON DELETE CASCADE',
+            'user_id' => "INT NOT NULL REFERENCES \"User\"(id) ON DELETE NO ACTION",
+            'order_id' => "INT NULL REFERENCES \"Order\"(id) ON UPDATE CASCADE ON DELETE CASCADE",
             'product_id' => 'INT NOT NULL',
             'qty' => 'SMALLINT NOT NULL',
 

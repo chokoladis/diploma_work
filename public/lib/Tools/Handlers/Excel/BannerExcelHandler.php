@@ -2,6 +2,7 @@
 
 namespace Main\Tools\Handlers\Excel;
 
+use Main\Core\Enum\Tools\TypeFillByExcel;
 use Main\Core\Exceptions\FileReadException;
 use Main\DTO\Content\BannerDTO;
 use Main\DTO\Content\FileDTO;
@@ -9,12 +10,25 @@ use Main\Repositories\Content\BannerRepository;
 
 class BannerExcelHandler extends BaseHandler
 {
+    public function __construct(string $field, bool $isSkipFirstRow = false)
+    {
+        parent::__construct($field, $isSkipFirstRow);
+    }
+
     public function action() : true
     {
         $banners = [];
 
+        $typeFill = isset($_POST['type_fill'])
+            ? TypeFillByExcel::tryFrom($_POST['type_fill'])
+            : null;
+        $typeFill ??= TypeFillByExcel::ADD;
+
         // todo handle columns
         foreach($this->readRow() as $row) {
+            if ($typeFill === TypeFillByExcel::REPLACE) {
+                // todo check code or xmlId field
+            }
             $arValues = explode(';', current($row));
 
             if ($arFile = explode('.', $arValues[1])){
@@ -39,6 +53,7 @@ class BannerExcelHandler extends BaseHandler
             );
         }
 
+        // todo choose action by TypeFill
         $new = new BannerRepository;
         return $new->addByDTO($banners);
     }

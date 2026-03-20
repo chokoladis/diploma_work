@@ -36,10 +36,10 @@
                                     $class = $isFirst ? 'curry' : '';
                                     $isFirst = false;
 
-                                    $fileInfo = json_decode($banner->file, true);
+                                    $filePath = \Main\Services\Content\FileService::getPath($banner->file);
                                     ?>
                                     <div class="slider_item <?=$class?>">
-                                        <img src="<?='/uploads/'. $fileInfo['directory'].'/'.$fileInfo['name']?>" alt="">
+                                        <img src="<?=$filePath?>" alt="">
                                         <div class="title_slider ">
                                             <div class="title_img"><?=$banner->title?></div>
                                             <div class="title_price"><?=$banner->description?></div>
