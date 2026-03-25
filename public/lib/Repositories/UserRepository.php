@@ -4,6 +4,7 @@ namespace Main\Repositories;
 
 use Main\Core\Database\QueryBuilder;
 use Main\Models\User;
+use Main\Tools\Cache;
 use Main\Tools\Logger;
 
 class UserRepository
@@ -55,18 +56,28 @@ class UserRepository
         return null;
     }
 
-    public function getByLogin(string $login) : User|false
+    public function getByLogin(string $login)
     {
-        $queryBuilder = new QueryBuilder(new User);
+//        todo by custom cache
+        $cache = new Cache();
+        if ($cacheData = $cache->get('login_'.$login)) {
+            if ($cacheData['expired'] > time())
+                return $cacheData['result'];
+        } else {
 
-        $query = $queryBuilder->where('login', $login)
-            ->limit(1)
-            ->getResult();
-        if ($query) {
-            return $query->fetch();
+            $queryBuilder = new QueryBuilder(new User);
+
+            $query = $queryBuilder->where('login', $login)
+                ->limit(1)
+                ->getResult();
+            if ($query) {
+                $res = $query->fetch();
+                $cache->set('login_'.$login, $res, 7200);
+                return $res;
+            }
+
+            return false;
         }
-
-        return false;
     }
 
     /**

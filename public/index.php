@@ -31,10 +31,10 @@
                             $banners = \Main\Services\Content\BannerService::get();
 
                             if (!empty($banners)) {
-                                $isFirst = true;
-                                foreach ($banners as $banner) {
-                                    $class = $isFirst ? 'curry' : '';
-                                    $isFirst = false;
+
+                                $firstKey = array_key_first($banners);
+                                foreach ($banners as $key => $banner) {
+                                    $class = $firstKey === $key ? 'curry' : '';
 
                                     $filePath = \Main\Services\Content\FileService::getPath($banner->file);
                                     ?>

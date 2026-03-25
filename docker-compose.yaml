@@ -18,6 +18,8 @@ services:
       - ./dockerfiles/php/conf/php.ini:/usr/local/etc/php/php.ini
       - .:/var/www/redmouse
     container_name: redmouse_php
+    depends_on:
+      - db
 
   db:
     image: postgres:18
@@ -28,6 +30,12 @@ services:
       POSTGRES_USER: '${DB_USERNAME}'
       POSTGRES_PASSWORD: '${DB_PASSWORD}'
       POSTGRES_DB: '${DB_DATABASE}'
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 1G
+
 
   pgadmin:
     image: dpage/pgadmin4:9.12
@@ -38,3 +46,5 @@ services:
       PGADMIN_DEFAULT_EMAIL: '${PGADMIN_EMAIL}'
       PGADMIN_DEFAULT_PASSWORD: '${PGADMIN_DEFAULT_PASSWORD}'
       PMA_HOST: db
+    depends_on:
+      - db

@@ -16,6 +16,7 @@ class QueryBuilder
 {
     const string LOGICAL_AND = 'AND';
     const string LOGICAL_OR = 'OR';
+    const SORT_DIRECTIONS = ['ASC', 'DESC'];
 
     const int DEFAULT_LIMIT = 10;
     const int MAX_LIMIT = 100;
@@ -36,7 +37,7 @@ class QueryBuilder
         $tableName = $this->model->getTableName();
         $this->sql = new SQLRequest(
             select: "SELECT * FROM \"{$tableName}\"",
-            pagination: 'LIMIT '.self::DEFAULT_LIMIT
+            pagination: 'OFFSET 0 LIMIT '.self::DEFAULT_LIMIT
         );
     }
 
@@ -137,6 +138,28 @@ class QueryBuilder
         }
 
         $this->sql->setPagination("LIMIT {$limit}");
+        return $this;
+    }
+
+    public function paginate(int $offset, int $limit)
+    {
+        if ($limit < 1 || $limit > self::MAX_LIMIT || $offset < 1) {
+            throw new \Exception('Лимит за рамками достутимого диапозона');
+        }
+
+        $this->sql->setPagination("OFFSET {$offset} LIMIT {$limit}");
+        return $this;
+    }
+
+    public function sortBy(string $field, ?string $direction = 'ASC')
+    {
+        if (!in_array($field, array_keys($this->model->map()))) {
+            throw new \Exception('Не корректное поле сортировки');
+        } elseif (!in_array($direction, self::SORT_DIRECTIONS)) {
+            throw new \Exception('Такой сортировки не существует');
+        }
+
+        $this->sql->setSort("ORDER BY {$field} {$direction}");
         return $this;
     }
 

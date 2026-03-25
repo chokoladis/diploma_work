@@ -7,26 +7,31 @@ use Main\Models\Model;
 class Product extends Model
 {
     public int $id;
-    public string $title;
+    public string $name;
     public ?string $code = null;
-    public string $preview; //jsonb or array ?
+
+    public bool $active;
     public string $description;
-    public ?int $sort = null;
+    public string $file_preview; //jsonb
+    public ?string $file_detail = null; //jsonb
 
     public ?string $section = null;
-    public bool $active;
+    public ?int $sort = null;
 
     public function map() : array
     {
         return [
             'id' => 'SERIAL PRIMARY KEY',
-            'title' => 'VARCHAR(50) NOT NULL',
+            'name' => 'VARCHAR(50) NOT NULL',
             'code' => 'VARCHAR(50) NULL',
-            'preview' => 'JSONB NOT NULL',
             'description' => 'VARCHAR(255) NULL',
-            'sort' => 'SMALLINT NULL DEFAULT 100',
-            'section' => 'VARCHAR(40) NULL',
             'active' => 'BOOLEAN NOT NULL DEFAULT TRUE',
+
+            'file_preview' => 'JSONB NOT NULL',
+            'file_detail' => 'JSONB NULL',
+
+            'section' => 'VARCHAR(40) NULL',
+            'sort' => 'SMALLINT NULL DEFAULT 100',
         ];
     }
 }

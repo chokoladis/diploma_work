@@ -16,6 +16,7 @@ class Menu extends Model
     public int $level = 0;
     public ?string $area = null;
     public ?int $parent_id = null;
+//    todo permission
 
 
     public function map() : array
