@@ -2,6 +2,8 @@
 
 namespace Main\Core\Database;
 
+use BadMethodCallException;
+use Exception;
 use Main\Core\Exceptions\AddRowToTableException;
 use Main\Core\Exceptions\IncorrectColumnsAddException;
 use Main\Core\Interfaces\HasMap;
@@ -22,7 +24,7 @@ class QueryBuilder
     const int MAX_LIMIT = 100;
 
 
-    private \PDO $db;
+    private PDO $db;
     private SQLRequest $sql;
     private ?CacheDTO $cache = null;
     private bool $isWhereUsed = false;
@@ -37,11 +39,12 @@ class QueryBuilder
         $tableName = $this->model->getTableName();
         $this->sql = new SQLRequest(
             select: "SELECT * FROM \"{$tableName}\"",
-            pagination: 'OFFSET 0 LIMIT '.self::DEFAULT_LIMIT
+            pagination: 'OFFSET 0 LIMIT ' . self::DEFAULT_LIMIT
         );
     }
 
-    public function __call($name, $arguments) {
+    public function __call($name, $arguments)
+    {
         if (stripos($name, 'where') !== false) {
             if (isset($arguments[1]) && is_string($arguments[1])) {
                 $arguments[1] = StrSecure::get($arguments[1]);
@@ -51,7 +54,68 @@ class QueryBuilder
         if (method_exists($this, $name)) {
             return call_user_func_array([$this, $name], $arguments);
         }
-        throw new \BadMethodCallException("Метод $name не найден");
+        throw new BadMethodCallException("Метод $name не найден");
+    }
+
+    public function paginate(int $offset, int $limit)
+    {
+        if ($limit < 1 || $limit > self::MAX_LIMIT || $offset < 1) {
+            throw new Exception('Лимит за рамками достутимого диапозона');
+        }
+
+        $this->sql->setPagination("OFFSET {$offset} LIMIT {$limit}");
+        return $this;
+    }
+
+    public function sortBy(string $field, ?string $direction = 'ASC')
+    {
+        if (!in_array($field, array_keys($this->model->map()))) {
+            throw new Exception('Не корректное поле сортировки');
+        } elseif (!in_array($direction, self::SORT_DIRECTIONS)) {
+            throw new Exception('Такой сортировки не существует');
+        }
+
+        $this->sql->setSort("ORDER BY {$field} {$direction}");
+        return $this;
+    }
+
+    public function getOne(string|int $primaryKey, array $columns = ['*'])
+    {
+        $primaryField = null;
+        foreach ($this->model->map() as $name => $value) {
+            if (stripos($value, 'SERIAL') !== false) {
+                $primaryField = $name;
+                break;
+            }
+        }
+
+        if ((is_int($primaryKey) && $primaryKey < 1)
+            || (is_string($primaryKey) && strlen($primaryKey) < 1)) {
+            throw new Exception('Invalid primary key');
+        }
+
+        $this->select($columns)
+            ->where($primaryField, $primaryKey)
+            ->limit(1);
+
+        $query = $this->db->query($this->sql->toString(), PDO::FETCH_CLASS, get_class($this->model));
+        $result = $query->fetch();
+        return $result !== false ? $result : null;
+    }
+
+    public function limit(int $limit)
+    {
+        if ($limit < 1 || $limit > self::MAX_LIMIT) {
+            throw new Exception('Лимит за рамками достутимого диапозона');
+        }
+
+        $this->sql->setPagination("LIMIT {$limit}");
+        return $this;
+    }
+
+    protected function where(string $column, mixed $value, string $operator = '=')
+    {
+        return $this->queryWhere($column, $value, $operator);
     }
 
     protected function queryWhere(string $column, mixed $value, string $operator = '=', array $params = [])
@@ -62,13 +126,13 @@ class QueryBuilder
 
         if (isset($params['LOGICAL_SEPARATOR'])
             && !in_array($params['LOGICAL_SEPARATOR'], [self::LOGICAL_AND, self::LOGICAL_OR])) {
-            throw new \Exception('Invalid LOGICAL statement');
+            throw new Exception('Invalid LOGICAL statement');
         }
 
         $key = 'WHERE';
         if ($this->isWhereUsed) {
             $logicSeparator = $params['LOGICAL_SEPARATOR'] ?? self::LOGICAL_OR;
-            $key = ' '.$logicSeparator;
+            $key = ' ' . $logicSeparator;
         } else {
             $this->isWhereUsed = true;
         }
@@ -77,34 +141,14 @@ class QueryBuilder
             $key = $key . ' NOT';
         }
 
-        $this->sql->addWhere($key.' '.$strQuery);
+        $this->sql->addWhere($key . ' ' . $strQuery);
         return $this;
-    }
-
-    protected function where(string $column, mixed $value, string $operator = '=')
-    {
-        return $this->queryWhere($column, $value, $operator);
-    }
-
-    protected function andWhere(string $column, mixed $value, string $operator = '=')
-    {
-        return $this->queryWhere($column, $value, $operator, ['LOGICAL_SEPARATOR' => self::LOGICAL_AND]);
-    }
-
-    protected function whereNot(string $column, mixed $value, string $operator = '=')
-    {
-        return $this->queryWhere($column, $value, $operator, ['NEGATIVE' => true]);
-    }
-
-    protected function andWhereNot(string $column, mixed $value, string $operator = '=')
-    {
-        return $this->queryWhere($column, $value, $operator, ['LOGICAL_SEPARATOR' => self::LOGICAL_AND, 'NEGATIVE' => true]);
     }
 
     public function select(array $columns)
     {
         if (empty($columns)) {
-            throw new \Exception('Empty columns');
+            throw new Exception('Empty columns');
         }
 
         if (count($columns) === 1) {
@@ -118,77 +162,7 @@ class QueryBuilder
         return $this;
     }
 
-    public function cache(int $ttl, ?string $key = null)
-    {
-        if (!$key) {
-            $key = json_encode($this->sql);
-        }
-
-        if ($ttl < 1) {
-            throw new \Exception('TTL must be greater than 0');
-        }
-
-        $this->cache = new CacheDTO($ttl, $key);
-    }
-
-    public function limit(int $limit)
-    {
-        if ($limit < 1 || $limit > self::MAX_LIMIT) {
-            throw new \Exception('Лимит за рамками достутимого диапозона');
-        }
-
-        $this->sql->setPagination("LIMIT {$limit}");
-        return $this;
-    }
-
-    public function paginate(int $offset, int $limit)
-    {
-        if ($limit < 1 || $limit > self::MAX_LIMIT || $offset < 1) {
-            throw new \Exception('Лимит за рамками достутимого диапозона');
-        }
-
-        $this->sql->setPagination("OFFSET {$offset} LIMIT {$limit}");
-        return $this;
-    }
-
-    public function sortBy(string $field, ?string $direction = 'ASC')
-    {
-        if (!in_array($field, array_keys($this->model->map()))) {
-            throw new \Exception('Не корректное поле сортировки');
-        } elseif (!in_array($direction, self::SORT_DIRECTIONS)) {
-            throw new \Exception('Такой сортировки не существует');
-        }
-
-        $this->sql->setSort("ORDER BY {$field} {$direction}");
-        return $this;
-    }
-
-    /* get one by primary key */
-    public function getOne(string|int $primaryKey, array $columns = ['*'])
-    {
-        $primaryField = null;
-        foreach ($this->model->map() as $name => $value) {
-            if (stripos($value, 'SERIAL') !== false) {
-                $primaryField = $name;
-                break;
-            }
-        }
-
-        if ((is_int($primaryKey) && $primaryKey < 1)
-            || (is_string($primaryKey) && strlen($primaryKey) < 1)) {
-            throw new \Exception('Invalid primary key');
-        }
-
-        $this->select($columns)
-            ->where($primaryField, $primaryKey)
-            ->limit(1);
-
-        $query = $this->db->query($this->sql->toString(), PDO::FETCH_CLASS, get_class($this->model));
-        $result = $query->fetch();
-        return $result !== false ? $result : null;
-    }
-
-    public function getResult() : PDOStatement|false
+    public function getResult(): PDOStatement|false
     {
         $sql = $this->sql->toString();
 
@@ -219,7 +193,7 @@ class QueryBuilder
 
         $strColumns = implode(',', $columns);
         foreach ($columns as $key => $value) {
-            $columns[$key] = ':'.$value;
+            $columns[$key] = ':' . $value;
         }
         $strValues = implode(',', $columns);
 
@@ -231,5 +205,22 @@ class QueryBuilder
         }
 
         return true;
+    }
+
+    /* get one by primary key */
+
+    protected function andWhere(string $column, mixed $value, string $operator = '=')
+    {
+        return $this->queryWhere($column, $value, $operator, ['LOGICAL_SEPARATOR' => self::LOGICAL_AND]);
+    }
+
+    protected function whereNot(string $column, mixed $value, string $operator = '=')
+    {
+        return $this->queryWhere($column, $value, $operator, ['NEGATIVE' => true]);
+    }
+
+    protected function andWhereNot(string $column, mixed $value, string $operator = '=')
+    {
+        return $this->queryWhere($column, $value, $operator, ['LOGICAL_SEPARATOR' => self::LOGICAL_AND, 'NEGATIVE' => true]);
     }
 }

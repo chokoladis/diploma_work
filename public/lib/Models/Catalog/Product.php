@@ -18,7 +18,7 @@ class Product extends Model
     public ?string $section = null;
     public ?int $sort = null;
 
-    public function map() : array
+    public function map(): array
     {
         return [
             'id' => 'SERIAL PRIMARY KEY',

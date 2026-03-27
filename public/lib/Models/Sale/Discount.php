@@ -16,7 +16,7 @@ class Discount extends Model
     public string $created_at;
     public ?string $updated_at = null;
 
-    public function map() : array
+    public function map(): array
     {
         //        todo draft table
         return [

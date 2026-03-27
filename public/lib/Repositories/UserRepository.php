@@ -2,7 +2,9 @@
 
 namespace Main\Repositories;
 
+use Exception;
 use Main\Core\Database\QueryBuilder;
+use Main\Core\Secure\OpenSSLEncryptor;
 use Main\Models\User;
 use Main\Tools\Cache;
 use Main\Tools\Logger;
@@ -16,10 +18,10 @@ class UserRepository
 
             $errors = [];
             if ($profile->login === $formData['login']) {
-                $errors['login'] = [ 'Пользователь с таким Логином уже зарегестрирован' ];
+                $errors['login'] = ['Пользователь с таким Логином уже зарегестрирован'];
             }
             if ($profile->email === $formData['email']) {
-                $errors['email'] = [ 'Пользователь с таким Email уже зарегестрирован' ];
+                $errors['email'] = ['Пользователь с таким Email уже зарегестрирован'];
             }
 
             return [false, $errors];
@@ -34,49 +36,9 @@ class UserRepository
 
             return [true, null];
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Logger::getInstance('user')->error($e->getMessage(), [$e->getLine(), $e->getFile()]);
             return [false, ['login' => ['system_error']]];
-        }
-    }
-
-    public function getByEmail($email)
-    {
-        $queryBuilder = new QueryBuilder(new User);
-
-        $query = $queryBuilder->select(['id'])
-            ->where('email', $email)
-            ->limit(1)
-            ->getResult();
-        if ($query) {
-            /* @return \Main\Models\User */
-            return $query->fetch();
-        }
-
-        return null;
-    }
-
-    public function getByLogin(string $login)
-    {
-//        todo by custom cache
-        $cache = new Cache();
-        if ($cacheData = $cache->get('login_'.$login)) {
-            if ($cacheData['expired'] > time())
-                return $cacheData['result'];
-        } else {
-
-            $queryBuilder = new QueryBuilder(new User);
-
-            $query = $queryBuilder->where('login', $login)
-                ->limit(1)
-                ->getResult();
-            if ($query) {
-                $res = $query->fetch();
-                $cache->set('login_'.$login, $res, 7200);
-                return $res;
-            }
-
-            return false;
         }
     }
 
@@ -84,9 +46,9 @@ class UserRepository
      * @param string $login
      * @param string $email
      * @return User|false
-     * @throws \Exception
+     * @throws Exception
      */
-    public function getByUniqueFields(string $login, string $email) : \Main\Models\User|false
+    public function getByUniqueFields(string $login, string $email): User|false
     {
         $queryBuilder = new QueryBuilder(new User);
 
@@ -100,5 +62,45 @@ class UserRepository
         }
 
         return false;
+    }
+
+    public function getByEmail($email)
+    {
+        $queryBuilder = new QueryBuilder(new User);
+
+        $query = $queryBuilder->select(['id'])
+            ->where('email', $email)
+            ->limit(1)
+            ->getResult();
+        if ($query) {
+            /* @return User */
+            return $query->fetch();
+        }
+
+        return null;
+    }
+
+    public function getByLogin(string $login, ?array $select = ['*'])
+    {
+        //        todo select
+        $cache = new Cache(new OpenSSLEncryptor);
+        $key = 'login_' . $login;
+        if ($cacheData = $cache->get($key)) {
+            return $cacheData['result'];
+        } else {
+
+            $queryBuilder = new QueryBuilder(new User);
+
+            $query = $queryBuilder->where('login', $login)
+                ->limit(1)
+                ->getResult();
+            if ($query) {
+                $res = $query->fetch();
+                $cache->set($key, $res, 7200);
+                return $res;
+            }
+
+            return false;
+        }
     }
 }

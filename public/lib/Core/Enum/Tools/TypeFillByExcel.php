@@ -2,7 +2,7 @@
 
 namespace Main\Core\Enum\Tools;
 
-enum TypeFillByExcel : string
+enum TypeFillByExcel: string
 {
     case ADD = 'add';
     case REPLACE = 'replace';

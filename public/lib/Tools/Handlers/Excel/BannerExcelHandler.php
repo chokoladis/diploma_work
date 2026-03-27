@@ -15,7 +15,7 @@ class BannerExcelHandler extends BaseHandler
         parent::__construct($field, $isSkipFirstRow);
     }
 
-    public function action() : true
+    public function action(): true
     {
         $banners = [];
 
@@ -25,13 +25,13 @@ class BannerExcelHandler extends BaseHandler
         $typeFill ??= TypeFillByExcel::ADD;
 
         // todo handle columns
-        foreach($this->readRow() as $row) {
+        foreach ($this->readRow() as $row) {
             if ($typeFill === TypeFillByExcel::REPLACE) {
                 // todo check code or xmlId field
             }
             $arValues = explode(';', current($row));
 
-            if ($arFile = explode('.', $arValues[1])){
+            if ($arFile = explode('.', $arValues[1])) {
                 $ext = array_pop($arFile);
             } else {
                 throw new FileReadException("Для строки {$arValues[0]} не указана картинка");
@@ -42,7 +42,7 @@ class BannerExcelHandler extends BaseHandler
                 title: $arValues[0],
                 imgSrc: new FileDTO(
                     $arValues[1],
-                    $this->tempDir.$this->fileName,
+                    $this->tempDir . $this->fileName,
                     $ext
                 ),
                 description: $arValues[2] ?? null,

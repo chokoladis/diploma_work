@@ -2,7 +2,7 @@
 
 namespace Main\Models;
 
-use DateTime;
+use Override;
 
 class User extends Model
 {
@@ -18,8 +18,8 @@ class User extends Model
     public string $created_at;
     public ?string $updated_at = null;
 
-    #[\Override]
-    public function map() : array
+    #[Override]
+    public function map(): array
     {
         return [
             'id' => 'SERIAL PRIMARY KEY',

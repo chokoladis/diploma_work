@@ -7,7 +7,7 @@ use Main\Repositories\UserRepository;
 class ProfileService
 {
 
-    public static function isUserAdmin(string $login) : bool
+    public static function isUserAdmin(string $login): bool
     {
         if ($user = (new UserRepository)->getByLogin($login)) {
             return $user->role === 'admin';

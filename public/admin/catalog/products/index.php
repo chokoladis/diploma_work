@@ -9,12 +9,13 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/admin/include/header.php';
     <main>
         <div class="container">
             <h3>Список товаров</h3>
-            <div class="btn-group">
-                <a href="products/add/" class="btn-primary">Добавление</a>
+            <div class="btn-group mt-3">
+                <a href="add/" class="btn btn-primary">Добавление</a>
             </div>
             <?
                 $productService = new \Main\Services\Catalog\ProductService;
                 if ($res = $productService->getProducts()) {
+
                     while($product = $res->fetch()) {
                          dump($product);
                         ?>

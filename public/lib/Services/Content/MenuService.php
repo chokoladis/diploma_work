@@ -15,7 +15,7 @@ class MenuService
 
         $query = $queryBuilder->getResult();
         if ($query) {
-            /* @var \Main\Models\Content\Menu $menuItem */
+            /* @var Menu $menuItem */
             $menuItems = $query->fetchAll();
         }
 

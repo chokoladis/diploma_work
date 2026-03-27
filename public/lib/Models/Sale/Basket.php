@@ -14,7 +14,7 @@ class Basket extends Model
     public string $created_at;
     public ?string $updated_at = null;
 
-    public function map() : array
+    public function map(): array
     {
         return [
             'id' => 'SERIAL PRIMARY KEY',

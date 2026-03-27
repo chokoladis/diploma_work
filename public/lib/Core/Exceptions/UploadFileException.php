@@ -2,9 +2,9 @@
 
 namespace Main\Core\Exceptions;
 
-use Main\Core\Interfaces\HandlerExcel;
+use Exception;
 
-class UploadFileException extends \Exception
+class UploadFileException extends Exception
 {
     protected $message = 'Ошибка загрузки файла';
     protected $status = 'error_load_file';

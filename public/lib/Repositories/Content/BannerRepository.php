@@ -2,6 +2,7 @@
 
 namespace Main\Repositories\Content;
 
+use Exception;
 use Main\Core\Database\QuerySetBuilder;
 use Main\DTO\Content\BannerDTO;
 use Main\Models\Content\Banner;
@@ -28,7 +29,7 @@ class BannerRepository
             }
 
             return $queryBuilder->deferredAddition();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $logger->error($e->getMessage(), [$e->getLine(), $e->getFile()]);
             throw $e;
         }

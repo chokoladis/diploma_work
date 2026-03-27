@@ -5,8 +5,8 @@ namespace Main\DTO\Content;
 class FileDTO
 {
     public function __construct(
-        public string $name,
-        public string $directory,
+        public string  $name,
+        public string  $directory,
         public ?string $extension = null,
     )
     {

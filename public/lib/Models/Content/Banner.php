@@ -18,7 +18,7 @@ class Banner extends Model
     public bool $active;
 
 
-    public function map() : array
+    public function map(): array
     {
         return [
             'id' => 'SERIAL PRIMARY KEY',

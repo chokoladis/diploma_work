@@ -13,11 +13,11 @@ abstract class BaseValidator
         array $fields,
     )
     {
-        $this->validator = \Main\Tools\Validators\IlluminateValidator::get();
+        $this->validator = IlluminateValidator::get();
         foreach ($fields as $field) {
             $this->secureFields[$field] = strip_tags($_POST[$field]);
         }
     }
 
-    abstract public function validate() : Validator;
+    abstract public function validate(): Validator;
 }

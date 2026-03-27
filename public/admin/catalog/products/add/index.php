@@ -10,26 +10,47 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/admin/include/header.php';
             <form action="#" method="post" class="add-product" enctype="multipart/form-data">
 
                 <div class="mb-3">
-                    <label for="file" class="form-label">Загрузите архив с index.csv файлом</label>
-                    <input class="form-control" id="file" type="file" name="file" accept="<?= BaseHandler::FILE_TYPE_ARCHIVE?>" required>
+                    <label for="name" class="form-label">Название</label>
+                    <input class="form-control" id="name" type="text" name="name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="code" class="form-label">Код</label>
+                    <input class="form-control" id="code" type="text" name="code" required>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="type_fill" value="add" checked id="add">
-                    <label class="form-check-label" for="add">
-                        Добавить
+                    <input class="form-check-input" type="checkbox" name="active" value="true" checked>
+                    <label class="form-check-label" for="active">
+                        Активность
                     </label>
                 </div>
+
+                <div class="mb-3">
+                    <label for="description" class="form-label">Описание</label>
+                    <input class="form-control" type="text" name="description">
+                </div>
+                <div class="mb-3">
+                    <label for="sort" class="form-label">Сортировка</label>
+                    <input class="form-control" type="number" name="sort">
+                </div>
+                <div class="mb-3">
+                    <label for="code" class="form-label">Превью</label>
+                    <input class="form-control" type="file" name="file_preview" required>
+                </div>
+                <div class="mb-3">
+                    <label for="code" class="form-label">Детальная картинка</label>
+                    <input class="form-control" type="file" name="file_detail">
+                </div>
+
                 <button type="submit" name="load-banners" class="btn btn-outline-light mt-4">Загрузить</button>
             </form>
             <?
-            if (isset($_POST['load-banners'])) {
-                $handler = new BannerExcelHandler('file');
-                [$result, $errors] = $handler->run();
-                if ($result) {
-                    $_SESSION['message'] = 'Баннеры успешно добавлены';
-                } elseif ($errors) {
-                    echo implode(' | ', $errors);
-                }
+            if (isset($_POST['submit'])) {
+
+//                if ($result) {
+//                    $_SESSION['message'] = 'Баннеры успешно добавлены';
+//                } elseif ($errors) {
+//                    echo implode(' | ', $errors);
+//                }
             }
             ?>
         </div>

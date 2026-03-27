@@ -15,7 +15,7 @@ final class BannerService
 
         $query = $queryBuilder->getResult();
         if ($query) {
-            /* @var \Main\Models\Content\Banner $item */
+            /* @var Banner $item */
             $arItems = $query->fetchAll();
         }
 

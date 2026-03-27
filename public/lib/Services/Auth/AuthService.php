@@ -13,6 +13,7 @@ class AuthService
 
     function __construct()
     {
+//        todo лимиты на запросы
         $this->tokenService = new TokenService(env('APP_SECRET_KEY'));
         $this->userRepository = new UserRepository();
     }

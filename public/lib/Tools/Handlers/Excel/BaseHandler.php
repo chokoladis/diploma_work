@@ -7,6 +7,8 @@ use Main\Core\Exceptions\FileReadException;
 use Main\Core\Exceptions\UploadFileException;
 use Main\Core\Interfaces\HandlerExcel;
 use Main\Tools\Logger;
+use Throwable;
+use ZipArchive;
 
 abstract class BaseHandler implements HandlerExcel
 {
@@ -25,7 +27,7 @@ abstract class BaseHandler implements HandlerExcel
         protected bool $isSkipFirstRow = true,
     )
     {
-        $this->tempDir = $_SERVER['DOCUMENT_ROOT'].'/uploads/tmp/excel/';
+        $this->tempDir = $_SERVER['DOCUMENT_ROOT'] . '/uploads/tmp/excel/';
 
         if (!file_exists($this->tempDir)) {
             mkdir($this->tempDir, 0755, true);
@@ -45,45 +47,23 @@ abstract class BaseHandler implements HandlerExcel
 
         } catch (FileReadException|UploadFileException $e) {
             return [false, ['message' => $e->getMessage()]];
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             Logger::getInstance('excel_handler')->error($e->getMessage(), [$e->getFile(), $e->getLine()]);
             return [false, ['message' => 'Возникла непредвиденная ошибка']];
         } finally {
-            if (isset($this->fileName) && file_exists($this->tempDir.$this->fileName)){
-                $files = glob($this->tempDir.$this->fileName.'/*');
-                foreach($files as $file){
-                    if(is_file($file)) {
+            if (isset($this->fileName) && file_exists($this->tempDir . $this->fileName)) {
+                $files = glob($this->tempDir . $this->fileName . '/*');
+                foreach ($files as $file) {
+                    if (is_file($file)) {
                         unlink($file);
                     }
                 }
-                var_dump('res remove', rmdir($this->tempDir.$this->fileName));
+                var_dump('res remove', rmdir($this->tempDir . $this->fileName));
             }
         }
     }
 
-    protected function readRow() : Generator
-    {
-        $resource = fopen($this->tempDir.$this->fileName.'/'.static::FILE_NAME_CSV, 'r');
-        if (!$resource) {
-            throw new FileReadException();
-        }
-
-        // todo use columns
-        $isFirst = true;
-        while ($row = fgetcsv($resource, escape: '')) {
-
-            if ($this->isSkipFirstRow && $isFirst) {
-                $isFirst = false;
-                continue;
-            }
-
-            yield $row;
-        }
-
-        fclose($resource);
-    }
-
-    protected function isValidArchive() : bool
+    protected function isValidArchive(): bool
     {
         if (!$_FILES[$this->field] || !file_exists($_FILES[$this->field]['tmp_name'])) {
             throw new UploadFileException('Файл не был найден при загрузке');
@@ -109,7 +89,7 @@ abstract class BaseHandler implements HandlerExcel
 
     protected function unpackArchive()
     {
-        $zip = new \ZipArchive();
+        $zip = new ZipArchive();
         if ($zip->open($_FILES[$this->field]['tmp_name']) === TRUE) {
             $zip->extractTo($this->tempDir);
             $zip->close();
@@ -122,13 +102,35 @@ abstract class BaseHandler implements HandlerExcel
 
     protected function checkCSV()
     {
-        $filePath = $this->tempDir.$this->fileName.'/'.static::FILE_NAME_CSV;
-        if (!file_exists($filePath)){
+        $filePath = $this->tempDir . $this->fileName . '/' . static::FILE_NAME_CSV;
+        if (!file_exists($filePath)) {
             throw new FileReadException("Файл {${static::FILE_NAME_CSV}} не был найден");
         } elseif (!in_array(mime_content_type($filePath), self::FILE_TYPE_CSV)) {
             throw new FileReadException("Ошибка типа контента в файле {${self::FILE_NAME_CSV}}");
         }
     }
 
-    abstract protected function action() : true;
+    abstract protected function action(): true;
+
+    protected function readRow(): Generator
+    {
+        $resource = fopen($this->tempDir . $this->fileName . '/' . static::FILE_NAME_CSV, 'r');
+        if (!$resource) {
+            throw new FileReadException();
+        }
+
+        // todo use columns
+        $isFirst = true;
+        while ($row = fgetcsv($resource, escape: '')) {
+
+            if ($this->isSkipFirstRow && $isFirst) {
+                $isFirst = false;
+                continue;
+            }
+
+            yield $row;
+        }
+
+        fclose($resource);
+    }
 }

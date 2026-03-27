@@ -2,14 +2,17 @@
 
 namespace Main\Tools;
 
+use Main\Core\Interfaces\Secure\Encryptor;
+
 class Cache
 {
     protected string $filePath;
 
-    public function __construct()
+    public function __construct(
+        private ?Encryptor $encryptor = null,
+    )
     {
-//        todo use шифрование
-        $this->filePath = $_SERVER['DOCUMENT_ROOT'].'uploads/cache/';
+        $this->filePath = $_SERVER['DOCUMENT_ROOT'] . '/uploads/cache/';
         if (!file_exists($this->filePath)) {
             mkdir($this->filePath, recursive: true);
         }
@@ -18,37 +21,41 @@ class Cache
 
     public function get(string $key)
     {
-        if ($data = file_get_contents($this->filePath.$key.'.txt')) {
-            return json_validate($data) ? json_decode($data, true) : false;
+        if ($data = file_get_contents($this->filePath . $key . '.txt')) {
+
+            if ($this->encryptor) {
+                $data = $this->encryptor->decrypt($data);
+            }
+
+            $data = unserialize($data);
+
+            if (time() > $data['expired']) {
+                $this->drop($key);
+                return false;
+            }
+
+            return $data;
         }
 
         return false;
     }
 
-    public function set(string $key, mixed $value, ?int $ttl = 3600)
-    {
-        $val = [
-            'result' => $value,
-            'expired' => time() + $ttl
-        ];
-
-        file_put_contents($this->filePath.$key.'.txt', json_encode($val), LOCK_EX);
-    }
-
     public function drop(string $key)
     {
-        unlink($this->filePath.$key.'.txt');
+        unlink($this->filePath . $key . '.txt');
     }
 
-    public function fullControl(string $key, mixed $value, ?int $ttl = 3600)
+    public function set(string $key, mixed $value, ?int $ttl = 3600)
     {
-        if ($arCache = self::get($key)) {
-            if ($arCache['expired'] > time()) {
-                return $arCache;
-            } else {
+        $val = serialize([
+            'result' => $value,
+            'expired' => time() + $ttl
+        ]);
 
-            }
+        if ($this->encryptor) {
+            $val = $this->encryptor->encrypt($val);
         }
 
+        file_put_contents($this->filePath . $key . '.txt', $val, LOCK_EX);
     }
 }

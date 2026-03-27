@@ -50,13 +50,16 @@ require_once 'before_load.php';
                                     <li>
                                         <b><?= $userLogin ?></b>
                                     </li>
-                                    <li>
-                                        <?
-                                            if (\Main\Services\ProfileService::isUserAdmin($userLogin)) {
-                                                ?><a href="/admin/">Админка</a><?
-                                            }
-                                        ?>
-                                    </li>
+
+                                    <?
+                                        if (\Main\Services\ProfileService::isUserAdmin($userLogin)) {
+                                            ?>
+                                            <li>
+                                                <a href="/admin/">Админка</a>
+                                            </li>
+                                            <?
+                                        }
+                                    ?>
                                     <li>
                                         <form action="#" method="POST" class="form-logout">
                                             <input type="hidden" name="logout" value="Y">

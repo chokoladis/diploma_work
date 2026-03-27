@@ -7,14 +7,14 @@ use Main\Tools\Validators\BaseValidator;
 
 class AuthValidator extends BaseValidator
 {
-    public function validate() : Validator
+    public function validate(): Validator
     {
         return $this->validator->make($this->secureFields, [
-            'login'            => 'required|min:2',
-            'password'         => 'required|min:8',
+            'login' => 'required|min:2',
+            'password' => 'required|min:8',
         ], [
-            'required'         => 'Заполните поле :attribute',
-            'min'              => 'Минимум :min символов',
+            'required' => 'Заполните поле :attribute',
+            'min' => 'Минимум :min символов',
         ]);
     }
 }

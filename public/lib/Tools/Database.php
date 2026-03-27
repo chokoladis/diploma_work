@@ -2,6 +2,9 @@
 
 namespace Main\Tools;
 
+use Exception;
+use PDO;
+
 class Database
 {
     static private $instance;
@@ -27,11 +30,11 @@ class Database
 
         foreach ($config as $item => $value) {
             if (empty($value) || $value === '') {
-                throw new \Exception('Missing connection parameter');
+                throw new Exception('Missing connection parameter');
             }
         }
 
-        return new \PDO(
+        return new PDO(
             sprintf(
                 "pgsql:host=%s;port=%d;dbname=%s;",
                 $_ENV['DB_HOST'],

@@ -9,10 +9,10 @@ use Illuminate\Validation\Factory;
 
 class IlluminateValidator
 {
-    public static function get() : Factory
+    public static function get(): Factory
     {
         $filesystem = new Filesystem();
-        $loader = new FileLoader($filesystem, __DIR__. '/lang');
+        $loader = new FileLoader($filesystem, __DIR__ . '/lang');
         $translator = new Translator($loader, 'ru'); //todo ?
         return new Factory($translator);
     }

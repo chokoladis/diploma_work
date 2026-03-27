@@ -3,13 +3,10 @@
 namespace Main\Models;
 
 use Main\Core\Interfaces\HasMap;
-use Main\Tools\Database;
 
 // interface entity ?
 abstract class Model implements HasMap
 {
-    abstract public function map(): array;
-
     public function __construct(
         protected ?string $tableName = null
     )
@@ -26,6 +23,8 @@ abstract class Model implements HasMap
             $this->tableName = $tableName;
         }
     }
+
+    abstract public function map(): array;
 
     public function getTableName(): string
     {

@@ -2,6 +2,7 @@
 
 namespace Main\Core\Database;
 
+use BadMethodCallException;
 use Main\Core\Exceptions\AddRowToTableException;
 use Main\Core\Exceptions\IncorrectColumnsAddException;
 use Main\Core\Interfaces\HasMap;
@@ -14,7 +15,7 @@ use PDOStatement;
 class QuerySetBuilder
 {
 
-    private \PDO $db;
+    private PDO $db;
     private SQLRequest $sql;
     private array $params = [];
     private array $values = [];
@@ -32,7 +33,8 @@ class QuerySetBuilder
         );
     }
 
-    public function __call($name, $arguments) {
+    public function __call($name, $arguments)
+    {
         if (stripos($name, 'where') !== false) {
             if (isset($arguments[1]) && is_string($arguments[1])) {
                 $arguments[1] = StrSecure::get($arguments[1]);
@@ -42,10 +44,10 @@ class QuerySetBuilder
         if (method_exists($this, $name)) {
             return call_user_func_array([$this, $name], $arguments);
         }
-        throw new \BadMethodCallException("Метод $name не найден");
+        throw new BadMethodCallException("Метод $name не найден");
     }
 
-    public function getResult() : PDOStatement|false
+    public function getResult(): PDOStatement|false
     {
         $sql = $this->sql->toString();
 
@@ -75,7 +77,7 @@ class QuerySetBuilder
 
         $strColumns = implode(',', $columns);
         foreach ($columns as $key => $value) {
-            $columns[$key] = ':'.$value;
+            $columns[$key] = ':' . $value;
         }
         $strValues = implode(',', $columns);
 
